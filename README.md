@@ -169,6 +169,8 @@ Each line begins with PID[ThreadID].
     19139[19139] #53: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
     ...
 
+Real-world application examples of libexray are in the [[Wiki|wiki]].
+
 #Options
 
 You can control the behaviour of the library by configuring options as an environment variable like
