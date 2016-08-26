@@ -23,13 +23,17 @@ There are known compatibility issues with other libraries.
 # Build
 In order to build the library, sync the source code to your Linux box and run make all. It will generate libexray.so.
 
+The binary is 64-bit by default. In case you need a 32-bit version of libexray, you can configure the bitness of the build to 32. Edit the 'BUILD_MODE' at the beginning of the Makefile at the top level.
+
 # Usage
 You can attach the library to an application when you run it, like this
 
     $ LD_PRELOAD=./libexray.so <command line>
 
 # Example
-Below is an example of an exception thrown and caught within libreoffice.
+Real-world application examples of libexray are in the [Wiki](https://github.com/tnakagome/exray/wiki).
+
+Below is an example of exception thrown and caught within libreoffice.
 
 This application is chosen as an example because it is one of a few, popular applications that can demonstrate the power of libexray.
 
@@ -168,8 +172,6 @@ Each line begins with PID[ThreadID].
     19139[19139] #52: /lib64/libc.so.6(__libc_start_main+0xf5) [0x7feb43d1bb15]
     19139[19139] #53: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
     ...
-
-Real-world application examples of libexray are in the [Wiki](https://github.com/tnakagome/exray/wiki).
 
 #Options
 
