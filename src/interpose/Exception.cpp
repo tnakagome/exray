@@ -10,6 +10,9 @@
 #include <stack/ThrowHandler.h>
 #include <stack/CatchHandler.h>
 
+#include <cxxabi.h>
+#include <exception>
+
 typedef void  (*CxaThrowFuncPtr)(void *, std::type_info *, void(*)(void *));
 typedef void* (*CxaBeginCatchFuncPtr)(void *);
 
@@ -47,3 +50,30 @@ extern "C"
         CXX::catchFunc(exceptionObject);
     }
 }
+
+#if defined(CPPMODE) && (CPPMODE == CPP11)
+typedef void  (*CxaRethrowExceptionFuncPtr)(std::__exception_ptr::exception_ptr);
+
+namespace CXX {
+    CxaRethrowExceptionFuncPtr rethrowExceptionFunc __attribute__ ((__noreturn__)) = NULL;
+}
+
+namespace std
+{
+    static const char *RETHROW_FUNC_MANGLED = "_ZSt17rethrow_exceptionNSt15__exception_ptr13exception_ptrE";
+
+    void rethrow_exception(__exception_ptr::exception_ptr p)
+    {
+        if (CXX::rethrowExceptionFunc == NULL) {
+            CXX::rethrowExceptionFunc =
+                (CxaRethrowExceptionFuncPtr)Interpose::loadFuncPtr(RETHROW_FUNC_MANGLED);
+        }
+        if (System::isThreadUnwinding() == false) {
+            ThrowHandler *handler = System::getThrowHandler();
+            handler->captureFrames(*p.__cxa_exception_type(), "__cxa_rethrow");
+            System::setThreadUnwinding();
+        }
+        CXX::rethrowExceptionFunc(p);
+    }
+}
+#endif
