@@ -11,6 +11,8 @@
 #include <core/Options.h>
 #include <stack/ThrowHandler.h>
 
+namespace exray {
+
 bool          Options::dumpAll        = true;
 bool          Options::pthreadDump    = false;
 int           Options::maxFrames      = 100;
@@ -18,8 +20,7 @@ char         *Options::logFileName    = NULL;
 
 StringList    Options::outputFilters;
 
-namespace OptionParser
-{
+namespace OptionParser {
     /**
      * Parse exception type names separated by pipe "|",
      * and stores them in an interal list.
@@ -101,4 +102,6 @@ namespace OptionParser
             }
         }
     }
-}
+} // namespace OptionParser
+
+} // namespace exray

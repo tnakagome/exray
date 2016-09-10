@@ -7,6 +7,8 @@
 #define STACKSIZE 100
 #define THREAD_ID_LENGTH 20
 
+namespace exray {
+
 /**
  * Base construct for call stack handling.
  */
@@ -43,4 +45,7 @@ StackHandler::getTimestamp(struct timeval &timestamp)
 {
     timestamp = this->timestamp;
 }
+
+} // namespace exray
+
 #endif

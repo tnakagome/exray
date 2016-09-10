@@ -3,6 +3,8 @@
 
 #include <stack/StackHandler.h>
 
+namespace exray {
+
 /**
  * Dump stack frames from an arbitrary location.
  */
@@ -13,5 +15,7 @@ public:
             void             dumpFrames            (const char *origin, void *object);
             void             dumpFrames            (const char *origin, const char *string);
 };
+
+} // namespace exray
 
 #endif

@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <errno.h>
 
+using namespace exray;
+
 namespace PThread
 {
     // pthread function pointer types

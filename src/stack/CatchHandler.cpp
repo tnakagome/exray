@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+using namespace exray;
+
 CatchHandler::CatchHandler():
     ExceptionHandler(), exceptionCaught(false)
 {

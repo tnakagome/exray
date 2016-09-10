@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <core/System.h>
 
+namespace exray {
+
 class Guardian
 {
 public:
@@ -21,3 +23,5 @@ inline Guardian::~Guardian()
 {
     (System::getMutexUnlockFunc())(&lock);
 }
+
+} // namespace exray

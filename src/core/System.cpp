@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 
+namespace exray {
+
 pthread_once_t             System::keyInitializer   = PTHREAD_ONCE_INIT;
 pthread_key_t              System::throwHandlerKey  = 0;
 pthread_key_t              System::catchHandlerKey  = 0;
@@ -116,7 +118,7 @@ void System::createDestructionKey()
 ThrowHandler *System::getThrowHandler()
 {
     if (isInitialized() == false)
-        exray_init();
+        exray::exray_init();
 
     ThrowHandler *throwHandler =
         (ThrowHandler *)pthread_getspecific(throwHandlerKey);
@@ -135,7 +137,7 @@ ThrowHandler *System::getThrowHandler()
 CatchHandler *System::getCatchHandler()
 {
     if (isInitialized() == false)
-        exray_init();
+        exray::exray_init();
 
     CatchHandler *catchHandler =
         (CatchHandler *)pthread_getspecific(catchHandlerKey);
@@ -232,3 +234,5 @@ bool *System::getBacktraceFlag()
     }
     return threadInBacktrace;
 }
+
+} // namespace exray

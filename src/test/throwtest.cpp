@@ -124,7 +124,7 @@ int main(int argc, char **argv)
     pthread_t thread[THREADS];
 
 #ifndef PRELOAD
-    exray_init();
+    exray::exray_init();
 #endif
 
     int fd = open("/foo/bar/baz", O_RDONLY);
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
     pthread_mutex_destroy(&testLock);
 
 #ifndef PRELOAD
-    exray_finish();
+    exray::exray_finish();
 #endif
 
     return 0;

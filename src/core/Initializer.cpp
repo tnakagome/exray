@@ -1,7 +1,7 @@
 #include <core/System.h>
 #include <core/Options.h>
-#include <core/Guardian.h>
 #include <core/Logger.h>
+#include <core/Initializer.h>
 
 #include <stack/StackHandler.h>
 
@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 __attribute__((constructor))
-void exray_init()
+void exray::exray_init()
 {
     System::init();
     OptionParser::parseOptions();
@@ -25,7 +25,7 @@ void exray_init()
 }
 
 __attribute__((destructor))
-void exray_finish()
+void exray::exray_finish()
 {
     StackHandler::finish();
     Logger::finish();

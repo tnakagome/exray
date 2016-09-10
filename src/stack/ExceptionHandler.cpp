@@ -3,6 +3,8 @@
 #include <cxxabi.h>
 #include <stdlib.h>
 
+using namespace exray;
+
 ExceptionHandler::ExceptionHandler():
     StackHandler()
 {

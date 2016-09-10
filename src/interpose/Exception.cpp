@@ -13,13 +13,16 @@
 #include <cxxabi.h>
 #include <exception>
 
+using namespace exray;
+
 typedef void  (*CxaThrowFuncPtr)(void *, std::type_info *, void(*)(void *));
 typedef void* (*CxaBeginCatchFuncPtr)(void *);
 
-namespace CXX
-{
-    CxaThrowFuncPtr      throwFunc = NULL;
-    CxaBeginCatchFuncPtr catchFunc = NULL;
+namespace exray {
+    namespace CXX {
+        CxaThrowFuncPtr      throwFunc = NULL;
+        CxaBeginCatchFuncPtr catchFunc = NULL;
+    }
 }
 
 extern "C"
@@ -28,34 +31,36 @@ extern "C"
                      std::type_info *tinfo,
                      void (*dest) (void *))
     {
-        if (CXX::throwFunc == NULL) {
-            CXX::throwFunc = (CxaThrowFuncPtr)Interpose::loadFuncPtr("__cxa_throw");
+        if (exray::CXX::throwFunc == NULL) {
+            exray::CXX::throwFunc = (CxaThrowFuncPtr)exray::Interpose::loadFuncPtr("__cxa_throw");
         }
         if (System::isThreadUnwinding() == false) {
             ThrowHandler *handler = System::getThrowHandler();
             handler->captureFrames(*tinfo, "__cxa_throw");
             System::setThreadUnwinding();
         }
-        CXX::throwFunc(thrownException, tinfo, dest);
+        exray::CXX::throwFunc(thrownException, tinfo, dest);
     }
 
     void *__cxa_begin_catch(void *exceptionObject) throw()
     {
-        if (CXX::catchFunc == NULL) {
-            CXX::catchFunc = (CxaBeginCatchFuncPtr)Interpose::loadFuncPtr("__cxa_begin_catch");
+        if (exray::CXX::catchFunc == NULL) {
+            exray::CXX::catchFunc = (CxaBeginCatchFuncPtr)exray::Interpose::loadFuncPtr("__cxa_begin_catch");
         }
         System::clearThreadUnwinding();
         CatchHandler *handler = System::getCatchHandler();
         handler->captureFrames("__cxa_begin_catch");
-        CXX::catchFunc(exceptionObject);
+        exray::CXX::catchFunc(exceptionObject);
     }
 }
 
 #if defined(CPPMODE) && (CPPMODE == CPP11)
 typedef void  (*CxaRethrowExceptionFuncPtr)(std::__exception_ptr::exception_ptr);
 
-namespace CXX {
-    CxaRethrowExceptionFuncPtr rethrowExceptionFunc __attribute__ ((__noreturn__)) = NULL;
+namespace exray {
+    namespace CXX {
+        CxaRethrowExceptionFuncPtr rethrowExceptionFunc __attribute__ ((__noreturn__)) = NULL;
+    }
 }
 
 namespace std
@@ -66,7 +71,7 @@ namespace std
     {
         if (CXX::rethrowExceptionFunc == NULL) {
             CXX::rethrowExceptionFunc =
-                (CxaRethrowExceptionFuncPtr)Interpose::loadFuncPtr(RETHROW_FUNC_MANGLED);
+                (CxaRethrowExceptionFuncPtr)exray::Interpose::loadFuncPtr(RETHROW_FUNC_MANGLED);
         }
         if (System::isThreadUnwinding() == false) {
             ThrowHandler *handler = System::getThrowHandler();

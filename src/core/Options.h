@@ -6,21 +6,23 @@
 
 typedef std::list<std::string> StringList;
 
-struct Options
-{
-    static bool        dumpAll;
-    static bool        pthreadDump;
-    static int         maxFrames;
-    static char       *logFileName;
+namespace exray {
 
-    static StringList  outputFilters;
-};
+    struct Options {
+        static bool        dumpAll;
+        static bool        pthreadDump;
+        static int         maxFrames;
+        static char       *logFileName;
+        
+        static StringList  outputFilters;
+    };
+    
+    namespace OptionParser {
+        void parseOptions();
+        void parseLogFilename();
+        void finish();
+    };
 
-namespace OptionParser
-{
-    void parseOptions();
-    void parseLogFilename();
-    void finish();
 };
 
 #endif // __OPTIONS__

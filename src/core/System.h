@@ -5,6 +5,8 @@
 #include <stack/CatchHandler.h>
 #include <pthread.h>
 
+namespace exray {
+
 typedef int (*PthreadMutexLockFuncPtr)(pthread_mutex_t *);
 typedef int (*PthreadMutexUnlockFuncPtr)(pthread_mutex_t *);
 
@@ -61,4 +63,7 @@ private:
      static PthreadMutexUnlockFuncPtr  mutexUnlockQuiet;
 
 };
+
+} // namespace exray
+
 #endif // __SYSTEM__

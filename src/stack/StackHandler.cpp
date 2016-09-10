@@ -19,6 +19,8 @@
 
 #define THREAD_ID_LENGTH 20
 
+using namespace exray;
+
 pthread_mutex_t     StackHandler::dumpLock   = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutexattr_t StackHandler::lockAttr;
 bool                StackHandler::active     = false;

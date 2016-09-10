@@ -3,6 +3,8 @@
 
 #include <stack/ExceptionHandler.h>
 
+namespace exray {
+
 /**
  * Handles exception stack frames when it is thrown.
  * Should be allocated in thread local storage area for each thread.
@@ -21,5 +23,7 @@ private:
 
             bool             exceptionThrown;
 };
+
+} // namespace exray
 
 #endif

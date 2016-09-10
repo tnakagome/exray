@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <strings.h>
 
+using namespace exray;
+
 ThrowHandler::ThrowHandler():
     ExceptionHandler(), exceptionThrown(false)
 {

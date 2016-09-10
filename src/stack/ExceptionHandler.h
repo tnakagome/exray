@@ -7,6 +7,8 @@
 
 #define EXCEPTION_TYPE_LENGTH 100
 
+namespace exray {
+
 class ExceptionHandler : public StackHandler
 {
 public:
@@ -17,5 +19,7 @@ protected:
 
             char             exceptionType[EXCEPTION_TYPE_LENGTH];
 };
+
+} // namespace exray
 
 #endif

@@ -7,6 +7,8 @@
 #include <execinfo.h>
 #include <stdio.h>
 
+using namespace exray;
+
 CallStackHandler::CallStackHandler():
     StackHandler()
 {
