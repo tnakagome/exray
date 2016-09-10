@@ -75,7 +75,7 @@ namespace std
         }
         if (System::isThreadUnwinding() == false) {
             ThrowHandler *handler = System::getThrowHandler();
-            handler->captureFrames(*p.__cxa_exception_type(), "__cxa_rethrow");
+            handler->captureFrames(*p.__cxa_exception_type(), "std::rethrow_exception()");
             System::setThreadUnwinding();
         }
         CXX::rethrowExceptionFunc(p);
