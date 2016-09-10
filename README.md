@@ -12,6 +12,8 @@ libexray.so is originally developed for Red Hat Enterprise Linux 5.5. It also wo
 
 It should also work on modern Linux distributions in general.
 
+The library is compiled in C++11 mode by default, but C++98 mode is also supported. See below for the procedure.
+
 # Compatibility
 
 There are known compatibility issues with other libraries.
@@ -24,6 +26,8 @@ There are known compatibility issues with other libraries.
 In order to build the library, sync the source code to your Linux box and run make all. It will generate libexray.so.
 
 The binary is 64-bit by default. In case you need a 32-bit version of libexray, you can configure the bitness of the build to 32. Edit the 'BUILD_MODE' at the beginning of the Makefile at the top level.
+
+Support for std::rethrow_exception (C++11) in enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the 'CPP_MODE' in the Makefile at the top level.
 
 # Usage
 You can attach the library to an application when you run it, like this
@@ -195,7 +199,7 @@ before invoking your target application with LD_PRELOAD.
 - In case you want to enhance this library, it is not possible to interpose functions within the ELF executable itself. Only functions defined in shared libraries can be interposed and analyzed.
 
 # Mechanism
-Fundamentally this is a collection of wrappers around OS library functions including 'throw' and 'catch' handlers. Underneath the wrappers are building blocks for capturing and writing stack frames at arbitrary execution points.
+Fundamentally this is a collection of wrappers around OS library functions including 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at arbitrary execution points.
 
 LD\_PRELOAD and dlsym() are OS facilities that allow you to add functionality to or even completely replace functions in shared libraries. With the help of these facilities, this library grabs calls to C++ throw and catch statements in libstdc++.so.
 
@@ -204,4 +208,4 @@ G++ translates throw and catch statements into these function calls, which resid
     __cxa_throw()
     __cxa_begin_catch()
 
-libexray.so adds back trace functionality to these functions by interposing calls to them and writing back traces from there.
+libexray.so adds back trace functionality to these functions and std::rethrow_exception() by interposing calls to them and writing back traces from there.
