@@ -50,7 +50,7 @@ extern "C"
         System::clearThreadUnwinding();
         CatchHandler *handler = System::getCatchHandler();
         handler->captureFrames("__cxa_begin_catch");
-        exray::CXX::catchFunc(exceptionObject);
+        return exray::CXX::catchFunc(exceptionObject);
     }
 }
 

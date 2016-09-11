@@ -27,8 +27,6 @@ public:
      static ThrowHandler              *getThrowHandler();
      static CatchHandler              *getCatchHandler();
 
-     static void                       countException(const char *);
-
      static PthreadMutexLockFuncPtr    getMutexLockFunc();
      static PthreadMutexUnlockFuncPtr  getMutexUnlockFunc();
 
