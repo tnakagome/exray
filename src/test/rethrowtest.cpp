@@ -15,7 +15,7 @@ exception_ptr p;
 int main(int argc, char **argv) {
 
     try {
-        throw invalid_argument("whaterver");
+        throw invalid_argument("whatever");
     }
     catch(const exception &e) {
         p = current_exception();

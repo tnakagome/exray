@@ -48,8 +48,9 @@ void StackHandler::setExitCalled()
 StackHandler::StackHandler()
 {
     gettimeofday(&timestamp, NULL);
-    traceStrings = NULL;
     snprintf(threadID, THREAD_ID_LENGTH, "%d[%d] ", getpid(), System::gettid());
+    traceStrings = NULL;
+    frameCount   = 0;
 }
 
 StackHandler::~StackHandler()

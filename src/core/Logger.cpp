@@ -18,6 +18,7 @@ bool exray::Logger::init()
 {
     logFD = 2; // stderr
     initialized = true;
+    return true;
 }
 
 /**

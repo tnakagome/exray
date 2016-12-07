@@ -14,7 +14,7 @@ ExceptionHandler::ExceptionHandler():
 /**
  * @return true if exception names can be demangled succeessfully.
  * In that case, caller must free *destination.
- * If demangled faied, then false will be returned.
+ * If demangle faied, then false will be returned.
  */
 bool ExceptionHandler::demangleException(char **destination)
 {
