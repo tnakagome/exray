@@ -23,7 +23,7 @@ StringList    Options::outputFilters;
 namespace OptionParser {
     /**
      * Parse exception type names separated by pipe "|",
-     * and stores them in an interal list.
+     * and stores them in an internal list.
      */
     static void parseOutputFilters(char *filterString)
     {
@@ -52,7 +52,7 @@ namespace OptionParser {
      *              as exception is thrown.
      *
      *  logfile   : Output will be written to this file when specified.
-     *              By deafult, stack dumps are written to stderr.
+     *              By default, stack dumps are written to stderr.
      *              This option redirects the output to file.
      *
      *  maxframes : Limit the number of frames per stack dump.
