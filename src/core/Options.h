@@ -14,7 +14,7 @@ namespace exray {
         static int         maxFrames;
         static char       *logFileName;
         
-        static StringList  outputFilters;
+        static StringList& outputFilters();
     };
     
     namespace OptionParser {

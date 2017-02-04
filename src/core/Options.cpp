@@ -18,7 +18,11 @@ bool          Options::pthreadDump    = false;
 int           Options::maxFrames      = 100;
 char         *Options::logFileName    = NULL;
 
-StringList    Options::outputFilters;
+StringList& Options::outputFilters()
+{
+    static StringList outFilters;
+    return outFilters;
+}
 
 namespace OptionParser {
     /**
@@ -32,7 +36,7 @@ namespace OptionParser {
 
         token = strtok_r(filterString, FILTER_DELIMITER, &saveptr);
         while (token != NULL) {
-            Options::outputFilters.push_back(token);
+            Options::outputFilters().push_back(token);
             token = strtok_r(NULL, FILTER_DELIMITER, &saveptr);
         }
     }

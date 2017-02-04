@@ -31,7 +31,7 @@ bool ExceptionHandler::demangleException(char **destination)
 
 bool ExceptionHandler::filterExceptions()
 {
-    if (! Options::outputFilters.empty()) {
+    if (! Options::outputFilters().empty()) {
         std::string currentException = this->exceptionType;
 
         char *exceptionString;
@@ -41,8 +41,8 @@ bool ExceptionHandler::filterExceptions()
             free(exceptionString);
         }
 
-        StringList::iterator it = Options::outputFilters.begin();
-        while (it != Options::outputFilters.end()) {
+        StringList::iterator it = Options::outputFilters().begin();
+        while (it != Options::outputFilters().end()) {
             const std::string &filterString = *it;
             if (currentException.find(filterString) != std::string::npos) {
                 return true;
