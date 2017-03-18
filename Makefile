@@ -66,7 +66,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 # Libraries
 #------------------------------------------------------------------------------
 $(EXRAY_LIB): $(LIB_OBJS)
-	$(CXX) -shared $(LIB_OBJS) -o $(EXRAY_LIB) $(LDFLAGS)
+	$(CXX) -shared $(LIB_OBJS) -o $(EXRAY_LIB) $(LDFLAGS) -lpthread
 
 $(TEST_LIB): $(TESTLIB_OBJS) $(EXRAY_LIB)
 	$(CXX) -shared $(TESTLIB_OBJS) -o $(TEST_LIB) $(LDFLAGS)
