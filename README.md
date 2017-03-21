@@ -177,20 +177,20 @@ Each line begins with PID[ThreadID].
     19139[19139] #53: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
     ...
 
-#Options
+# Options
 
 You can control the behaviour of the library by configuring options as an environment variable like
 
     $ export LIBEXRAY=exitonly
 
-before invoking your target application with LD_PRELOAD.
+before invoking your target application with LD_PRELOAD. Use comma as delimiter when specifying multiple options.
 
 ### Option Values
 
 - exitonly : Only write the latest call stack when exit() is called in the target application, and all exceptions after exit() is called.
 - logfile=filename : The library writes information to stderr by default. This option redirects the output to specified file.
 - maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
-- outputfilter=exception-name,... : Comma-separated list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. you can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
+- outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. you can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
 - pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build. See the .cpp file for the target pthread functions.
 
 # Tips
