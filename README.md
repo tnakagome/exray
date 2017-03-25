@@ -2,15 +2,16 @@
 
 This is a pluggable shared library for C++ exception analysis at run-time. There is no need to rebuild target applications. You can attach the library to existing applications at start-up very easily, and see the origin and type of a C++ exception thrown as well as where it is caught. LD_PRELOAD environment variable will do all the magic for you.
 
-The initial purpose of the library is to identify the source of exceptions that entered catch(...) {} block.
-
 It is also very easy to add call stack dumps to arbitrary C/C++ functions by creating wrapper functions around them. Supporting classes and functions already exist in this library. 
 
 # Supported Platforms
 
-libexray.so is originally developed for Red Hat Enterprise Linux 5.5. It also works with RHEL 6 and 7, including their clones.
+Generally libexray should work on all modern Linux distributions.
 
-It should also work on modern Linux distributions in general.
+Tested and supported distributions are:
+
+- Red Hat Enterprise Linux 5.5 and higher, including clones
+- Ubuntu 16 and higher
 
 The library is compiled in C++11 mode by default, but C++98 mode is also supported. See below for the procedure.
 
@@ -192,6 +193,16 @@ before invoking your target application with LD_PRELOAD. Use comma as delimiter 
 - maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
 - outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. you can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
 - pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build. See the .cpp file for the target pthread functions.
+
+# Symbol Demangling
+C++ function names in the stack traces are mangled. For example, 14th frame in the above throw example contains this function name:
+
+	_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE
+
+If you want to derive the original function name from this mangled name, use c++ filt command like this:
+
+	$ c++filt _ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE
+	ucbhelper::Content::getPropertyValue(rtl::OUString const&)
 
 # Tips
 - If your target application throws tons of exceptions and stacks are deep, this library can slow down its execution significantly due to the amount of output it generates. (Frame dumps are serialized by a global mutex.) In such cases, filter out unnecessary exceptions by the "outputfilter" option and limit the number of frames by the "maxframes" option.
