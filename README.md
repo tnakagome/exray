@@ -199,7 +199,7 @@ C++ function names in the stack traces are mangled. For example, 14th frame in t
 
 	_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE
 
-If you want to derive the original function name from this mangled name, use c++ filt command like this:
+If you want to derive the original function name from this mangled name, use c++filt command like this:
 
 	$ c++filt _ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE
 	ucbhelper::Content::getPropertyValue(rtl::OUString const&)
