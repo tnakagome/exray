@@ -4,12 +4,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
 
 bool exray::Logger::initialized = false;
 int  exray::Logger::logFD       = -1;
+bool exray::Logger::writeToFile = false;
 
 /**
  * Default logger that writes messages to stderr.
@@ -35,9 +37,12 @@ bool exray::Logger::init(const char *path)
     else {
         fprintf(stderr, "exray::Logger::init(): writing log to %s\n", path);
         initialized = true;
+        writeToFile = true;
         return true;
     }
 }
+
+#define LOG_BUFFER_SIZE 512
 
 bool exray::Logger::printf(const char *format, ...)
 {
@@ -45,12 +50,18 @@ bool exray::Logger::printf(const char *format, ...)
         return false;
 
     va_list args;
-    char buffer[512];
+    char buffer[LOG_BUFFER_SIZE];
 
     va_start(args, format);
-    vsprintf(buffer, format, args);
+    int result = vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
     va_end(args);
-    write(buffer);
+    if (result < 0) {
+        return false;
+    }
+    else {
+        write(buffer);
+        return true;
+    }
 }
 
 bool exray::Logger::write(const char *message)
@@ -67,5 +78,6 @@ bool exray::Logger::write(const char *message)
 
 void exray::Logger::finish()
 {
-    close(logFD);
+    if (writeToFile)
+        close(logFD);
 }

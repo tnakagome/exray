@@ -17,6 +17,7 @@ namespace exray {
     private:
         static bool    initialized;
         static int     logFD;
+        static bool    writeToFile;
     };
 
 } // namespace exray
