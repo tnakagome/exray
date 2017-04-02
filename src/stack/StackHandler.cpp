@@ -49,8 +49,8 @@ StackHandler::StackHandler()
 {
     gettimeofday(&timestamp, NULL);
     snprintf(threadID, THREAD_ID_LENGTH, "%d[%d] ", getpid(), System::gettid());
-    traceStrings = NULL;
-    frameCount   = 0;
+    this->traceStrings = NULL;
+    this->frameCount   = 0;
 }
 
 StackHandler::~StackHandler()
@@ -72,8 +72,10 @@ void StackHandler::dumpVerboseFrames(int depth, char *traceStrings[])
 
     int loop = (Options::maxFrames < depth) ? Options::maxFrames : depth;
     for (int i = 1; i <= loop; i++, currentFrame++) {
-        Logger::printf("%s#%d: %s\n", threadID, i, traceStrings[currentFrame]);
+        Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
     }
+    free(this->traceStrings);
+    this->traceStrings = NULL;
 }
 
 void StackHandler::captureFrames()
