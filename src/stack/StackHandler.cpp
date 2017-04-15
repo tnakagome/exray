@@ -14,24 +14,46 @@
 #include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <string.h>
 #include <strings.h>
 #include <execinfo.h>
+#include <cxxabi.h>
 
 #define THREAD_ID_LENGTH 20
 
 using namespace exray;
 
-pthread_mutex_t     StackHandler::dumpLock   = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t     StackHandler::dumpLock      = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutexattr_t StackHandler::lockAttr;
-bool                StackHandler::active     = false;
-bool                StackHandler::exitCalled = false;
+bool                StackHandler::active        = false;
+bool                StackHandler::exitCalled    = false;
+regex_t             StackHandler::framePattern;
+
+/*
+ * Regex pattern for a stack frame from backtrace_symbols()
+ * used to extract the function name from a frame.
+ *
+ * Example frame string:
+ * /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE+0xa6) [0x7feb400bedf6]
+ *
+ * Match groups
+ * 0 1         2        3
+ * ^([^(]+)\\(([^\\+]*)(\\+.*)$
+ *
+ * 0: Entire string
+ * 1: Shared library or program name
+ * 2: Function name (before the + sign), which may or may not be mangled
+ * 3: The rest
+ */
+static const char *FRAME_PATTERN_REGEX = "^([^(]+)\\(([^\\+]*)(\\+.*)$";
 
 void StackHandler::init()
 {
     pthread_mutexattr_init(&lockAttr);
     pthread_mutexattr_settype(&lockAttr, PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init(&dumpLock, &lockAttr);
-    StackHandler::active  = true;
+    regcomp(&StackHandler::framePattern, FRAME_PATTERN_REGEX, REG_EXTENDED);
+    StackHandler::active = true;
 }
 
 void StackHandler::finish()
@@ -60,19 +82,102 @@ StackHandler::~StackHandler()
 // Ignore the first 2 frames that belong to this library
 #define SKIP_FRAMES 2
 
+void StackHandler::dumpMangled(int loop, char *traceString[])
+{
+    int currentFrame = SKIP_FRAMES;
+    for (int i = 1; i <= loop; i++, currentFrame++) {
+        Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
+    }
+}
+
+/**
+ * Convert a mangled C++ function name into human readable string.
+ *
+ * @return the char array containing demangled frame string.
+ * Caller must delete the pointer.
+ */
+char *StackHandler::demangleFrame(char *frame)
+{
+    regmatch_t pmatch[REGEX_BUFFER];
+    int ret = regexec(&framePattern, frame, REGEX_BUFFER, pmatch, 0);
+    if (ret != 0) {
+        // probably not a mangled name
+        return NULL;
+    }
+
+    int begin  = pmatch[2].rm_so;
+    int end    = pmatch[2].rm_eo;
+    int length = end - begin + 1;
+    if (length <= 1) {
+        // there may be no function name in the frame
+        return NULL;
+    }
+
+    char *mangled = new char[length];
+    int destIndex = 0, srcIndex = 0;
+    for (srcIndex = begin; srcIndex < end; srcIndex++) {
+        mangled[destIndex++] = frame[srcIndex];
+    }
+    mangled[destIndex] = '\0';
+
+    int status;
+    char *demangled = abi::__cxa_demangle(mangled, NULL, NULL, &status);
+    if (status != 0) { // demangle failed
+        delete[] mangled;
+        return NULL;
+    }
+
+    char *result = new char[pmatch[0].rm_eo * 2]; // blindly allocate double the input string.
+    destIndex = 0;
+    // copy library or program name
+    for (srcIndex = pmatch[1].rm_so; srcIndex <= pmatch[1].rm_eo; srcIndex++) {
+        result[destIndex++] = frame[srcIndex];
+    }
+    // copy demangled function
+    int demangledLength = strlen(demangled);
+    for (srcIndex = 0; srcIndex < demangledLength; srcIndex++) {
+        result[destIndex++] = demangled[srcIndex];
+    }
+    free(demangled);
+    // copy the rest
+    for (srcIndex = pmatch[3].rm_so; srcIndex < pmatch[3].rm_eo; srcIndex++) {
+        result[destIndex++] = frame[srcIndex];
+    }
+    result[destIndex] = '\0';
+    delete[] mangled;
+    return result;
+}
+
+void StackHandler::dumpDemangled(int loop, char *traceString[])
+{
+    int currentFrame = SKIP_FRAMES;
+    for (int i = 1; i <= loop; i++, currentFrame++) {
+        char *demangled = demangleFrame(this->traceStrings[currentFrame]);
+        if (demangled == NULL) {
+            Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
+        }
+        else {
+            Logger::printf("%s#%d: %s\n", threadID, i, demangled);
+            delete[] demangled;
+        }
+    }
+}
+
 void StackHandler::dumpVerboseFrames(int depth, char *traceStrings[])
 {
     if (depth <= SKIP_FRAMES || traceStrings == NULL)
         return;
 
-    int currentFrame = SKIP_FRAMES;
     depth -= SKIP_FRAMES;
 
     Logger::printf("%sStack Frames\n", threadID);
 
     int loop = (Options::maxFrames < depth) ? Options::maxFrames : depth;
-    for (int i = 1; i <= loop; i++, currentFrame++) {
-        Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
+    if (Options::demangleFunction) {
+        dumpDemangled(loop, traceStrings);
+    }
+    else {
+        dumpMangled(loop, traceStrings);
     }
     free(this->traceStrings);
     this->traceStrings = NULL;

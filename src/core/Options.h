@@ -13,6 +13,7 @@ namespace exray {
         static bool        pthreadDump;
         static int         maxFrames;
         static char       *logFileName;
+        static bool        demangleFunction;
         
         static StringList& outputFilters();
     };

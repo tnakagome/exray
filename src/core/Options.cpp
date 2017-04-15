@@ -13,10 +13,11 @@
 
 namespace exray {
 
-bool          Options::dumpAll        = true;
-bool          Options::pthreadDump    = false;
-int           Options::maxFrames      = 100;
-char         *Options::logFileName    = NULL;
+bool          Options::dumpAll          = true;
+bool          Options::pthreadDump      = false;
+int           Options::maxFrames        = 100;
+char         *Options::logFileName      = NULL;
+bool          Options::demangleFunction = false;
 
 StringList& Options::outputFilters()
 {
@@ -50,6 +51,9 @@ namespace OptionParser {
      * Parse options for the library.
      *
      * Options:
+     *
+     *  demangle  : Demangle function names within stack frames whenever possible.
+     *
      *  exitonly  : Print stack frame information from the last exception thrown
      *              when the target program and its threads exit. Without
      *              this option, all exception information will be written
@@ -85,7 +89,10 @@ namespace OptionParser {
 
             value = strtok_r(options, OPTION_DELIMITER, &saveptr);
             while (value != NULL) {
-                if (strcmp(value, "exitonly") == 0) {
+                if (strcmp(value, "demangle") == 0) {
+                    Options::demangleFunction = true;
+                }
+                else if (strcmp(value, "exitonly") == 0) {
                     Options::dumpAll = false;
                 }
                 else if (strstr(value, MAXFRAMES_OPT) != NULL) {

@@ -47,147 +47,104 @@ Each line begins with PID[ThreadID].
     $ export LD_PRELOAD=./libexray.so libreoffice
 
     ...
-    19139[19139] ------------------------------------------------------------
-    19139[19139] Origin of Dump: __cxa_throw
-    19139[19139] Exception Time: 22:25:09.985108
-    19139[19139] Exception Type: com::sun::star::ucb::InteractiveAugmentedIOException
-    19139[19139] Stack Frames
-    19139[19139] #1: ./libexray.so(__cxa_throw+0x6b) [0x7feb445927c3]
-    19139[19139] #2: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(+0x5c98) [0x7feb2745ac98]
-    19139[19139] #3: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(+0x3b13) [0x7feb27458b13]
-    19139[19139] #4: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(+0x3fcb) [0x7feb27458fcb]
-    19139[19139] #5: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(privateSnippetExecutor+0x76) [0x7feb27460c1e]
-    19139[19139] #6: /usr/lib64/libreoffice/program/../ure-link/lib/libuno_cppuhelpergcc3.so.3(_ZN4cppu14throwExceptionERKN3com3sun4star3uno3AnyE+0x23a) [0x7feb4264241a]
-    19139[19139] #7: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper22cancelCommandExecutionEN3com3sun4star3ucb11IOErrorCodeERKNS2_3uno8SequenceINS5_3AnyEEERKNS5_9ReferenceINS3_19XCommandEnvironmentEEERKN3rtl8OUStringERKNSB_INS3_17XCommandProcessorEEE+0x198) [0x7feb400cc218]
-    19139[19139] #8: /usr/lib64/libreoffice/program/../program/libucpfile1.so(+0x1e85e)     [0x7feb1e3c985e]
-    19139[19139] #9: /usr/lib64/libreoffice/program/../program/libucpfile1.so(+0x4177a) [0x7feb1e3ec77a]
-    19139[19139] #10: /usr/lib64/libreoffice/program/../program/libucpfile1.so(+0x15fc4) [0x7feb1e3c0fc4]
-    19139[19139] #11: /usr/lib64/libreoffice/program/libucbhelper.so(+0x2a525) [0x7feb400bd525]
-    19139[19139] #12: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content26getPropertyValuesInterfaceERKN3com3sun4star3uno8SequenceIN3rtl8OUStringEEE+0x17f) [0x7feb400be2ef]
-    19139[19139] #13: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content17getPropertyValuesERKN3com3sun4star3uno8SequenceIN3rtl8OUStringEEE+0x2c) [0x7feb400beb6c]
-    19139[19139] #14: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE+0xa6) [0x7feb400bedf6]
-    19139[19139] #15: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content8isFolderEv+0x54) [0x7feb400bf3b4]
-    19139[19139] #16: /usr/lib64/libreoffice/program/libdeploymentmisclo.so(_ZN7dp_misc18create_ucb_contentEPN9ucbhelper7ContentERKN3rtl8OUStringERKN3com3sun4star3uno9ReferenceINS9_3ucb19XCommandEnvironmentEEEb+0x7e) [0x7feb423f187e]
-    19139[19139] #17: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x6ea52) [0x7feaf9ea2a52]
-    19139[19139] #18: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x72e03) [0x7feaf9ea6e03]
-    19139[19139] #19: /usr/lib64/libreoffice/program/libcomphelper.so(_ZN10comphelper12service_decl11ServiceDecl7Factory37createInstanceWithArgumentsAndContextERKN3com3sun4star3uno8SequenceINS6_3AnyEEERKNS6_9ReferenceINS6_17XComponentContextEEE+0x3d) [0x7feb42c1147d]
-    19139[19139] #20: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x88b6e) [0x7feaf9ebcb6e]
-    19139[19139] #21: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x8b1bc) [0x7feaf9ebf1bc]
-    19139[19139] #22: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x40898) [0x7feaf9e74898]
-    19139[19139] #23: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x4abb1) [0x7feaf9e7ebb1]
-    19139[19139] #24: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x4f7cf) [0x7feaf9e837cf]
-    19139[19139] #25: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x2fd63) [0x7feaf9e63d63]
-    19139[19139] #26: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x30252) [0x7feaf9e64252]
-    19139[19139] #27: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x30439) [0x7feaf9e64439]
-    19139[19139] #28: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x24940) [0x7feafaf11940]
-    19139[19139] #29: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x27169) [0x7feafaf14169]
-    19139[19139] #30: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x49dfc) [0x7feafaf36dfc]
-    19139[19139] #31: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x4a50d) [0x7feafaf3750d]
-    19139[19139] #32: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x4a555) [0x7feafaf37555]
-    19139[19139] #33: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x13a26) [0x7feafaf00a26]
-    19139[19139] #34: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x14551) [0x7feafaf01551]
-    19139[19139] #35: /usr/lib64/libreoffice/program/libucbhelper.so(+0x2a525) [0x7feb400bd525]
-    19139[19139] #36: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content26getPropertyValuesInterfaceERKN3com3sun4star3uno8SequenceIN3rtl8OUStringEEE+0x17f) [0x7feb400be2ef]
-    19139[19139] #37: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content17getPropertyValuesERKN3com3sun4star3uno8SequenceIN3rtl8OUStringEEE+0x2c) [0x7feb400beb6c]
-    19139[19139] #38: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE+0xa6) [0x7feb400bedf6]
-    19139[19139] #39: /usr/lib64/libreoffice/program/libsfxlo.so(+0x1a293b) [0x7feb4162f93b]
-    19139[19139] #40: /usr/lib64/libreoffice/program/libsfxlo.so(+0x1a7026) [0x7feb41634026]
-    19139[19139] #41: /usr/lib64/libreoffice/program/libsfxlo.so(_ZN7SfxHelp13CreateHelpURLERKN3rtl8OUStringES3_+0x28) [0x7feb416340c8]
-    19139[19139] #42: /usr/lib64/libreoffice/program/libsfxlo.so(+0x1a711b) [0x7feb4163411b]
-    19139[19139] #43: /usr/lib64/libreoffice/program/libsfxlo.so(_ZN7SfxHelp11GetHelpTextERKN3rtl8OUStringEPK6Window+0x4b) [0x7feb4163426b]
-    19139[19139] #44: /usr/lib64/libreoffice/program/libvcllo.so(_ZNK6Window11GetHelpTextEv+0xcc) [0x7feb3f76340c]
-    19139[19139] #45: /usr/lib64/libreoffice/program/libvcllo.so(_ZNK6Window24GetAccessibleDescriptionEv+0x69) [0x7feb3f6c8ac9]
-    19139[19139] #46: /usr/lib64/libreoffice/program/libtklo.so(_ZN23VCLXAccessibleComponent24getAccessibleDescriptionEv+0x9c) [0x7feb406efa3c]
-    19139[19139] #47: /usr/lib64/libreoffice/program/libvclplug_gtklo.so(+0x3525d) [0x7feb2de7a25d]
-    19139[19139] #48: /lib64/libatk-bridge-2.0.so.0(+0x138f6) [0x7feb243628f6]
-    19139[19139] #49: /lib64/libglib-2.0.so.0(g_hash_table_foreach+0x60) [0x7feb3e3db3d0]
-    19139[19139] #50: /lib64/libatk-bridge-2.0.so.0(+0x13d90) [0x7feb24362d90]
-    19139[19139] #51: /lib64/libatk-bridge-2.0.so.0(+0x10f84) [0x7feb2435ff84]
-    19139[19139] #52: /lib64/libdbus-1.so.3(+0x1dc76) [0x7feb3a50ac76]
-    19139[19139] #53: /lib64/libdbus-1.so.3(dbus_connection_dispatch+0x399) [0x7feb3a4fce49]
-    19139[19139] #54: /lib64/libatspi.so.0(+0xc005) [0x7feb24134005]
-    19139[19139] #55: /lib64/libglib-2.0.so.0(g_main_context_dispatch+0x15a) [0x7feb3e3eb7aa]
-    19139[19139] #56: /lib64/libglib-2.0.so.0(+0x49af8) [0x7feb3e3ebaf8]
-    19139[19139] #57: /lib64/libglib-2.0.so.0(g_main_context_iteration+0x2c) [0x7feb3e3ebbac]
-    19139[19139] #58: /usr/lib64/libreoffice/program/libvclplug_gtklo.so(+0x38da5) [0x7feb2de7dda5]
-    19139[19139] #59: /usr/lib64/libreoffice/program/libvcllo.so(_ZN11Application5YieldEv+0x5e) [0x7feb3f95b28e]
-    19139[19139] #60: /usr/lib64/libreoffice/program/libvcllo.so(_ZN11Application7ExecuteEv+0x25) [0x7feb3f95b325]
-    19139[19139] #61: /usr/lib64/libreoffice/program/libsofficeapp.so(+0x24063) [0x7feb440df063]
-    19139[19139] #62: /usr/lib64/libreoffice/program/libvcllo.so(+0x3cdd31) [0x7feb3f95fd31]
-    19139[19139] #63: /usr/lib64/libreoffice/program/libvcllo.so(_Z6SVMainv+0x22) [0x7feb3f95fd62]
-    19139[19139] #64: /usr/lib64/libreoffice/program/libsofficeapp.so(soffice_main+0x135) [0x7feb44103675]
-    19139[19139] #65: /usr/lib64/libreoffice/program/soffice.bin() [0x40071b]
-    19139[19139] #66: /lib64/libc.so.6(__libc_start_main+0xf5) [0x7feb43d1bb15]
-    19139[19139] #67: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
-    19139[19139] ------------------------------------------------------------
-    19139[19139] Origin of Dump: __cxa_begin_catch
-    19139[19139] Exception Time: 22:25:09.986490
-    19139[19139] Stack Frames
-    19139[19139] #1: ./libexray.so(__cxa_begin_catch+0x55) [0x7feb4459283a]
-    19139[19139] #2: /usr/lib64/libreoffice/program/libdeploymentmisclo.so(_ZN7dp_misc18create_ucb_contentEPN9ucbhelper7ContentERKN3rtl8OUStringERKN3com3sun4star3uno9ReferenceINS9_3ucb19XCommandEnvironmentEEEb+0xef) [0x7feb423f18ef]
-    19139[19139] #3: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x6ea52) [0x7feaf9ea2a52]
-    19139[19139] #4: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x72e03) [0x7feaf9ea6e03]
-    19139[19139] #5: /usr/lib64/libreoffice/program/libcomphelper.so(_ZN10comphelper12service_decl11ServiceDecl7Factory37createInstanceWithArgumentsAndContextERKN3com3sun4star3uno8SequenceINS6_3AnyEEERKNS6_9ReferenceINS6_17XComponentContextEEE+0x3d) [0x7feb42c1147d]
-    19139[19139] #6: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x88b6e) [0x7feaf9ebcb6e]
-    19139[19139] #7: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x8b1bc) [0x7feaf9ebf1bc]
-    19139[19139] #8: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x40898) [0x7feaf9e74898]
-    19139[19139] #9: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x4abb1) [0x7feaf9e7ebb1]
-    19139[19139] #10: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x4f7cf) [0x7feaf9e837cf]
-    19139[19139] #11: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x2fd63) [0x7feaf9e63d63]
-    19139[19139] #12: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x30252) [0x7feaf9e64252]
-    19139[19139] #13: /usr/lib64/libreoffice/program/../program/libdeployment.so(+0x30439) [0x7feaf9e64439]
-    19139[19139] #14: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x24940) [0x7feafaf11940]
-    19139[19139] #15: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x27169) [0x7feafaf14169]
-    19139[19139] #16: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x49dfc) [0x7feafaf36dfc]
-    19139[19139] #17: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x4a50d) [0x7feafaf3750d]
-    19139[19139] #18: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x4a555) [0x7feafaf37555]
-    19139[19139] #19: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x13a26) [0x7feafaf00a26]
-    19139[19139] #20: /usr/lib64/libreoffice/program/../program/libucpchelp1.so(+0x14551) [0x7feafaf01551]
-    19139[19139] #21: /usr/lib64/libreoffice/program/libucbhelper.so(+0x2a525) [0x7feb400bd525]
-    19139[19139] #22: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content26getPropertyValuesInterfaceERKN3com3sun4star3uno8SequenceIN3rtl8OUStringEEE+0x17f) [0x7feb400be2ef]
-    19139[19139] #23: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content17getPropertyValuesERKN3com3sun4star3uno8SequenceIN3rtl8OUStringEEE+0x2c) [0x7feb400beb6c]
-    19139[19139] #24: /usr/lib64/libreoffice/program/libucbhelper.so(_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE+0xa6) [0x7feb400bedf6]
-    19139[19139] #25: /usr/lib64/libreoffice/program/libsfxlo.so(+0x1a293b) [0x7feb4162f93b]
-    19139[19139] #26: /usr/lib64/libreoffice/program/libsfxlo.so(+0x1a7026) [0x7feb41634026]
-    19139[19139] #27: /usr/lib64/libreoffice/program/libsfxlo.so(_ZN7SfxHelp13CreateHelpURLERKN3rtl8OUStringES3_+0x28) [0x7feb416340c8]
-    19139[19139] #28: /usr/lib64/libreoffice/program/libsfxlo.so(+0x1a711b) [0x7feb4163411b]
-    19139[19139] #29: /usr/lib64/libreoffice/program/libsfxlo.so(_ZN7SfxHelp11GetHelpTextERKN3rtl8OUStringEPK6Window+0x4b) [0x7feb4163426b]
-    19139[19139] #30: /usr/lib64/libreoffice/program/libvcllo.so(_ZNK6Window11GetHelpTextEv+0xcc) [0x7feb3f76340c]
-    19139[19139] #31: /usr/lib64/libreoffice/program/libvcllo.so(_ZNK6Window24GetAccessibleDescriptionEv+0x69) [0x7feb3f6c8ac9]
-    19139[19139] #32: /usr/lib64/libreoffice/program/libtklo.so(_ZN23VCLXAccessibleComponent24getAccessibleDescriptionEv+0x9c) [0x7feb406efa3c]
-    19139[19139] #33: /usr/lib64/libreoffice/program/libvclplug_gtklo.so(+0x3525d) [0x7feb2de7a25d]
-    19139[19139] #34: /lib64/libatk-bridge-2.0.so.0(+0x138f6) [0x7feb243628f6]
-    19139[19139] #35: /lib64/libglib-2.0.so.0(g_hash_table_foreach+0x60) [0x7feb3e3db3d0]
-    19139[19139] #36: /lib64/libatk-bridge-2.0.so.0(+0x13d90) [0x7feb24362d90]
-    19139[19139] #37: /lib64/libatk-bridge-2.0.so.0(+0x10f84) [0x7feb2435ff84]
-    19139[19139] #38: /lib64/libdbus-1.so.3(+0x1dc76) [0x7feb3a50ac76]
-    19139[19139] #39: /lib64/libdbus-1.so.3(dbus_connection_dispatch+0x399) [0x7feb3a4fce49]
-    19139[19139] #40: /lib64/libatspi.so.0(+0xc005) [0x7feb24134005]
-    19139[19139] #41: /lib64/libglib-2.0.so.0(g_main_context_dispatch+0x15a) [0x7feb3e3eb7aa]
-    19139[19139] #42: /lib64/libglib-2.0.so.0(+0x49af8) [0x7feb3e3ebaf8]
-    19139[19139] #43: /lib64/libglib-2.0.so.0(g_main_context_iteration+0x2c) [0x7feb3e3ebbac]
-    19139[19139] #44: /usr/lib64/libreoffice/program/libvclplug_gtklo.so(+0x38da5) [0x7feb2de7dda5]
-    19139[19139] #45: /usr/lib64/libreoffice/program/libvcllo.so(_ZN11Application5YieldEv+0x5e) [0x7feb3f95b28e]
-    19139[19139] #46: /usr/lib64/libreoffice/program/libvcllo.so(_ZN11Application7ExecuteEv+0x25) [0x7feb3f95b325]
-    19139[19139] #47: /usr/lib64/libreoffice/program/libsofficeapp.so(+0x24063) [0x7feb440df063]
-    19139[19139] #48: /usr/lib64/libreoffice/program/libvcllo.so(+0x3cdd31) [0x7feb3f95fd31]
-    19139[19139] #49: /usr/lib64/libreoffice/program/libvcllo.so(_Z6SVMainv+0x22) [0x7feb3f95fd62]
-    19139[19139] #50: /usr/lib64/libreoffice/program/libsofficeapp.so(soffice_main+0x135) [0x7feb44103675]
-    19139[19139] #51: /usr/lib64/libreoffice/program/soffice.bin() [0x40071b]
-    19139[19139] #52: /lib64/libc.so.6(__libc_start_main+0xf5) [0x7feb43d1bb15]
-    19139[19139] #53: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
+	7560[7560] Origin of Dump: __cxa_throw
+	7560[7560] Exception Time: 15:58:16.672872
+	7560[7560] Exception Type: com::sun::star::ucb::InteractiveAugmentedIOException
+	7560[7560] Stack Frames
+	7560[7560] #1: ./libexray.so(__cxa_throw+0x6b) [0x7f832cd9be4f]
+	7560[7560] #2: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(+0x5c98) [0x7f830fc61c98]
+	7560[7560] #3: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(+0x3b13) [0x7f830fc5fb13]
+	7560[7560] #4: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(+0x3fcb) [0x7f830fc5ffcb]
+	7560[7560] #5: /usr/lib64/libreoffice/ure/lib/libgcc3_uno.so(privateSnippetExecutor+0x76) [0x7f830fc67c1e]
+	7560[7560] #6: /usr/lib64/libreoffice/program/../ure-link/lib/libuno_cppuhelpergcc3.so.3(cppu::throwException(com::sun::star::uno::Any const&)+0x23a) [0x7f832ae4a41a]
+	7560[7560] #7: /usr/lib64/libreoffice/program/libucbhelper.so(ucbhelper::cancelCommandExecution(com::sun::star::ucb::IOErrorCode, com::sun::star::uno::Sequence<com::sun::star::uno::Any> const&, com::sun::star::uno::Reference<com::sun::star::ucb::XCommandEnvironment> const&, rtl::OUString const&, com::sun::star::uno::Reference<com::sun::star::ucb::XCommandProcessor> const&)+0x198) [0x7f83288d4218]
+	7560[7560] #8: /usr/lib64/libreoffice/program/../program/libucpfile1.so(+0x1e85e) [0x7f8306bee85e]
+	7560[7560] #9: /usr/lib64/libreoffice/program/../program/libucpfile1.so(+0x4177a) [0x7f8306c1177a]
+	7560[7560] #10: /usr/lib64/libreoffice/program/../program/libucpfile1.so(+0x15fc4) [0x7f8306be5fc4]
+	7560[7560] #11: /usr/lib64/libreoffice/program/libucbhelper.so(+0x2a525) [0x7f83288c5525]
+	7560[7560] #12: /usr/lib64/libreoffice/program/libucbhelper.so(ucbhelper::Content::executeCommand(rtl::OUString const&, com::sun::star::uno::Any const&)+0x9c) [0x7f83288c82cc]
+	7560[7560] #13: /usr/lib64/libreoffice/program/libutllo.so(+0x10652f) [0x7f832865452f]
+	7560[7560] #14: /usr/lib64/libreoffice/program/libutllo.so(utl::UcbLockBytes::CreateLockBytes(com::sun::star::uno::Reference<com::sun::star::ucb::XContent> const&, com::sun::star::uno::Sequence<com::sun::star::beans::PropertyValue> const&, unsigned short, com::sun::star::uno::Reference<com::sun::star::task::XInteractionHandler> const&, utl::UcbLockBytesHandler*)+0x534) [0x7f8328656d74]
+	7560[7560] #15: /usr/lib64/libreoffice/program/libutllo.so(+0x10c9e7) [0x7f832865a9e7]
+	7560[7560] #16: /usr/lib64/libreoffice/program/libutllo.so(utl::UcbStreamHelper::CreateStream(rtl::OUString const&, unsigned short, utl::UcbLockBytesHandler*)+0x31) [0x7f832865b9a1]
+	7560[7560] #17: /usr/lib64/libreoffice/program/libvcllo.so(GraphicFilter::ImportGraphic(Graphic&, INetURLObject const&, unsigned short, unsigned short*, unsigned int)+0x71) [0x7f832817c411]
+	7560[7560] #18: /usr/lib64/libreoffice/program/libvcllo.so(GraphicFilter::LoadGraphic(rtl::OUString const&, rtl::OUString const&, Graphic&, GraphicFilter*, unsigned short*)+0x1c0) [0x7f832817c680]
+	7560[7560] #19: /usr/lib64/libreoffice/program/libvcllo.so(+0x3c43c7) [0x7f832815e3c7]
+	7560[7560] #20: /usr/lib64/libreoffice/program/libvcllo.so(+0x3c47a8) [0x7f832815e7a8]
+	7560[7560] #21: /usr/lib64/libreoffice/program/libvcllo.so(StyleSettings::GetPersonaHeader() const+0x29) [0x7f832815ef19]
+	7560[7560] #22: /usr/lib64/libreoffice/program/libvcllo.so(StyleSettings::GetPersonaMenuBarTextColor() const+0x27) [0x7f832815ef67]
+	7560[7560] #23: /usr/lib64/libreoffice/program/libvclplug_gtklo.so(+0x4d9a4) [0x7f83166999a4]
+	7560[7560] #24: /usr/lib64/libreoffice/program/libvcllo.so(+0x1cd411) [0x7f8327f67411]
+	7560[7560] #25: /usr/lib64/libreoffice/program/libvcllo.so(+0x1da281) [0x7f8327f74281]
+	7560[7560] #26: /usr/lib64/libreoffice/program/libvcllo.so(+0x134d63) [0x7f8327eced63]
+	7560[7560] #27: /usr/lib64/libreoffice/program/libvcllo.so(+0x134fb0) [0x7f8327ecefb0]
+	7560[7560] #28: /usr/lib64/libreoffice/program/libvcllo.so(+0x1e4ce8) [0x7f8327f7ece8]
+	7560[7560] #29: /usr/lib64/libreoffice/program/libvcllo.so(WorkWindow::WorkWindow(Window*, long)+0x4e) [0x7f8327f7f06e]
+	7560[7560] #30: /usr/lib64/libreoffice/program/libtklo.so(+0x1808cc) [0x7f8328f268cc]
+	7560[7560] #31: /usr/lib64/libreoffice/program/libtklo.so(+0x181d4b) [0x7f8328f27d4b]
+	7560[7560] #32: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0x192238) [0x7f8306fd1238]
+	7560[7560] #33: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0x193f8a) [0x7f8306fd2f8a]
+	7560[7560] #34: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0xac579) [0x7f8306eeb579]
+	7560[7560] #35: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0x15cd5c) [0x7f8306f9bd5c]
+	7560[7560] #36: /usr/lib64/libreoffice/program/libsofficeapp.so(+0x1a361) [0x7f832c8de361]
+	7560[7560] #37: /usr/lib64/libreoffice/program/libsofficeapp.so(+0x238e3) [0x7f832c8e78e3]
+	7560[7560] #38: /usr/lib64/libreoffice/program/libvcllo.so(+0x3cdd31) [0x7f8328167d31]
+	7560[7560] #39: /usr/lib64/libreoffice/program/libvcllo.so(SVMain()+0x22) [0x7f8328167d62]
+	7560[7560] #40: /usr/lib64/libreoffice/program/libsofficeapp.so(soffice_main+0x135) [0x7f832c90c675]
+	7560[7560] #41: /usr/lib64/libreoffice/program/soffice.bin() [0x40071b]
+	7560[7560] #42: /lib64/libc.so.6(__libc_start_main+0xf5) [0x7f832c523b15]
+	7560[7560] #43: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
+	7560[7560] ------------------------------------------------------------
+	7560[7560] Origin of Dump: __cxa_begin_catch
+	7560[7560] Exception Time: 15:58:16.674866
+	7560[7560] Stack Frames
+	7560[7560] #1: ./libexray.so(__cxa_begin_catch+0x55) [0x7f832cd9bec6]
+	7560[7560] #2: /usr/lib64/libreoffice/program/libutllo.so(+0x108491) [0x7f8328656491]
+	7560[7560] #3: /usr/lib64/libreoffice/program/libutllo.so(utl::UcbLockBytes::CreateLockBytes(com::sun::star::uno::Reference<com::sun::star::ucb::XContent> const&, com::sun::star::uno::Sequence<com::sun::star::beans::PropertyValue> const&, unsigned short, com::sun::star::uno::Reference<com::sun::star::task::XInteractionHandler> const&, utl::UcbLockBytesHandler*)+0x534) [0x7f8328656d74]
+	7560[7560] #4: /usr/lib64/libreoffice/program/libutllo.so(+0x10c9e7) [0x7f832865a9e7]
+	7560[7560] #5: /usr/lib64/libreoffice/program/libutllo.so(utl::UcbStreamHelper::CreateStream(rtl::OUString const&, unsigned short, utl::UcbLockBytesHandler*)+0x31) [0x7f832865b9a1]
+	7560[7560] #6: /usr/lib64/libreoffice/program/libvcllo.so(GraphicFilter::ImportGraphic(Graphic&, INetURLObject const&, unsigned short, unsigned short*, unsigned int)+0x71) [0x7f832817c411]
+	7560[7560] #7: /usr/lib64/libreoffice/program/libvcllo.so(GraphicFilter::LoadGraphic(rtl::OUString const&, rtl::OUString const&, Graphic&, GraphicFilter*, unsigned short*)+0x1c0) [0x7f832817c680]
+	7560[7560] #8: /usr/lib64/libreoffice/program/libvcllo.so(+0x3c43c7) [0x7f832815e3c7]
+	7560[7560] #9: /usr/lib64/libreoffice/program/libvcllo.so(+0x3c47a8) [0x7f832815e7a8]
+	7560[7560] #10: /usr/lib64/libreoffice/program/libvcllo.so(StyleSettings::GetPersonaHeader() const+0x29) [0x7f832815ef19]
+	7560[7560] #11: /usr/lib64/libreoffice/program/libvcllo.so(StyleSettings::GetPersonaMenuBarTextColor() const+0x27) [0x7f832815ef67]
+	7560[7560] #12: /usr/lib64/libreoffice/program/libvclplug_gtklo.so(+0x4d9a4) [0x7f83166999a4]
+	7560[7560] #13: /usr/lib64/libreoffice/program/libvcllo.so(+0x1cd411) [0x7f8327f67411]
+	7560[7560] #14: /usr/lib64/libreoffice/program/libvcllo.so(+0x1da281) [0x7f8327f74281]
+	7560[7560] #15: /usr/lib64/libreoffice/program/libvcllo.so(+0x134d63) [0x7f8327eced63]
+	7560[7560] #16: /usr/lib64/libreoffice/program/libvcllo.so(+0x134fb0) [0x7f8327ecefb0]
+	7560[7560] #17: /usr/lib64/libreoffice/program/libvcllo.so(+0x1e4ce8) [0x7f8327f7ece8]
+	7560[7560] #18: /usr/lib64/libreoffice/program/libvcllo.so(WorkWindow::WorkWindow(Window*, long)+0x4e) [0x7f8327f7f06e]
+	7560[7560] #19: /usr/lib64/libreoffice/program/libtklo.so(+0x1808cc) [0x7f8328f268cc]
+	7560[7560] #20: /usr/lib64/libreoffice/program/libtklo.so(+0x181d4b) [0x7f8328f27d4b]
+	7560[7560] #21: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0x192238) [0x7f8306fd1238]
+	7560[7560] #22: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0x193f8a) [0x7f8306fd2f8a]
+	7560[7560] #23: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0xac579) [0x7f8306eeb579]
+	7560[7560] #24: /usr/lib64/libreoffice/program/../program/libfwklo.so(+0x15cd5c) [0x7f8306f9bd5c]
+	7560[7560] #25: /usr/lib64/libreoffice/program/libsofficeapp.so(+0x1a361) [0x7f832c8de361]
+	7560[7560] #26: /usr/lib64/libreoffice/program/libsofficeapp.so(+0x238e3) [0x7f832c8e78e3]
+	7560[7560] #27: /usr/lib64/libreoffice/program/libvcllo.so(+0x3cdd31) [0x7f8328167d31]
+	7560[7560] #28: /usr/lib64/libreoffice/program/libvcllo.so(SVMain()+0x22) [0x7f8328167d62]
+	7560[7560] #29: /usr/lib64/libreoffice/program/libsofficeapp.so(soffice_main+0x135) [0x7f832c90c675]
+	7560[7560] #30: /usr/lib64/libreoffice/program/soffice.bin() [0x40071b]
+	7560[7560] #31: /lib64/libc.so.6(__libc_start_main+0xf5) [0x7f832c523b15]
+	7560[7560] #32: /usr/lib64/libreoffice/program/soffice.bin() [0x400751]
     ...
 
 # Options
 
 You can control the behaviour of the library by configuring options as an environment variable like
 
-    $ export LIBEXRAY=exitonly
+    $ export LIBEXRAY=exitonly,demangle
 
-before invoking your target application with LD_PRELOAD. Use comma as delimiter when specifying multiple options.
+before invoking your target application with LD_PRELOAD.
+
+Use comma as delimiter when specifying multiple options.
 
 ### Option Values
 
+- demangle : Demangle function names within stack frames whenever possible. This is disabled by default.
 - exitonly : Only write the latest call stack when exit() is called in the target application, and all exceptions after exit() is called.
 - logfile=filename : The library writes information to stderr by default. This option redirects the output to specified file.
 - maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
@@ -195,7 +152,7 @@ before invoking your target application with LD_PRELOAD. Use comma as delimiter 
 - pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build. See the .cpp file for the target pthread functions.
 
 # Symbol Demangling
-C++ function names in the stack traces are mangled. For example, 14th frame in the above throw example contains this function name:
+C++ function names in the stack traces are mangled unless you use the demangle option. For example, you may see this function name in a back trace from libreoffice:
 
 	_ZN9ucbhelper7Content16getPropertyValueERKN3rtl8OUStringE
 
@@ -208,6 +165,10 @@ If you want to derive the original function name from this mangled name, use c++
 - If your target application throws tons of exceptions and stacks are deep, this library can slow down its execution significantly due to the amount of output it generates. (Frame dumps are serialized by a global mutex.) In such cases, filter out unnecessary exceptions by the "outputfilter" option and limit the number of frames by the "maxframes" option.
 
 - In case you want to enhance this library, it is not possible to interpose functions within the ELF executable itself. Only functions defined in shared libraries can be interposed and analyzed.
+
+- If log file is empty and you see stack frames in your console, the target program may have closed all file descriptors including the one that this library had opened. In this case, try using subshell to redirect all outputs to a file with parenthesis.
+
+    $ ( LD_PRELOAD=./libexray libreoffice ) > exray-output.txt
 
 # Mechanism
 Fundamentally this is a collection of wrappers around OS library functions including 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at arbitrary execution points.

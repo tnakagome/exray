@@ -3,9 +3,11 @@
 
 #include <sys/types.h>
 #include <pthread.h>
+#include <regex.h>
 
 #define STACKSIZE 100
 #define THREAD_ID_LENGTH 20
+#define REGEX_BUFFER 4
 
 namespace exray {
 
@@ -15,29 +17,38 @@ namespace exray {
 class StackHandler
 {
 public:
-    static  void             init                  ();
-    static  void             finish                ();
-    static  void             setExitCalled         ();
+    static  void                  init                  ();
+    static  void                  finish                ();
+    static  void                  setExitCalled         ();
 
-            void             getTimestamp          (struct timeval &);
+            void                  getTimestamp          (struct timeval &);
 
 protected:
-    static  pthread_mutex_t     dumpLock;
-    static  pthread_mutexattr_t lockAttr;
-    static  bool             active;
-    static  bool             exitCalled;
+    static  pthread_mutex_t       dumpLock;
+    static  pthread_mutexattr_t   lockAttr;
+    static  bool                  active;
+    static  bool                  exitCalled;
 
-                             StackHandler          ();
-                            ~StackHandler          ();
+                                  StackHandler          ();
+                                 ~StackHandler          ();
 
-            void             captureFrames         ();
-            void             dumpVerboseFrames     (int frameCount, char *traceString[]);
+            void                  captureFrames         ();
+            void                  dumpVerboseFrames     (int frameCount, char *traceString[]);
 
-            struct timeval   timestamp;
-            char             threadID[THREAD_ID_LENGTH];
-            void            *frames[STACKSIZE];
-            char           **traceStrings;
-            int              frameCount;
+            struct timeval        timestamp;
+            char                  threadID[THREAD_ID_LENGTH];
+            void                 *frames[STACKSIZE];
+            char                **traceStrings;
+            int                   frameCount;
+
+private:
+    static  regex_t               framePattern;
+
+            void                  dumpMangled           (int frameCount, char *traceString[]);
+            void                  dumpDemangled         (int frameCount, char *traceString[]);
+            char                 *demangleFrame         (char *frame);
+
+            regmatch_t            pmatch[REGEX_BUFFER]; // frame pattern is split into 3 parts + entire match.
 };
 
 inline void
