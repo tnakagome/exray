@@ -6,12 +6,10 @@
 #include <stack/StackHandler.h>
 #include <core/Options.h>
 #include <core/System.h>
-#include <core/Initializer.h>
 #include <core/Logger.h>
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
 #include <string.h>

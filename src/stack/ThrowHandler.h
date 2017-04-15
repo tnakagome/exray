@@ -2,6 +2,7 @@
 #define __THROW_HANDLER__
 
 #include <stack/ExceptionHandler.h>
+#include <typeinfo>
 
 namespace exray {
 

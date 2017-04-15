@@ -3,10 +3,6 @@
 #include <core/Guardian.h>
 #include <core/Logger.h>
 
-#include <cxxabi.h>
-#include <sys/time.h>
-#include <execinfo.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 using namespace exray;

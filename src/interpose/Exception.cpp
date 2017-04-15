@@ -10,9 +10,6 @@
 #include <stack/ThrowHandler.h>
 #include <stack/CatchHandler.h>
 
-#include <cxxabi.h>
-#include <exception>
-
 using namespace exray;
 
 typedef void  (*CxaThrowFuncPtr)(void *, std::type_info *, void(*)(void *));

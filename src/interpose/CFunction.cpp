@@ -4,7 +4,6 @@
 
 #include <core/Interpose.h>
 #include <core/System.h>
-#include <core/Options.h>
 #include <stack/StackHandler.h>
 #include <stack/ThrowHandler.h>
 #include <stack/CatchHandler.h>

@@ -5,8 +5,6 @@
 
 #include <stack/StackHandler.h>
 
-#include <pthread.h>
-
 #include <stdlib.h>
 
 __attribute__((constructor))

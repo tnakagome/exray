@@ -2,8 +2,6 @@
 #define __EXCEPTION_HANDLER__
 
 #include <stack/StackHandler.h>
-#include <list>
-#include <string>
 
 #define EXCEPTION_TYPE_LENGTH 100
 

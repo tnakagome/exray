@@ -1,15 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <strings.h>
-#include <string.h>
-#include <pthread.h>
-#include <sys/types.h>
-#include <errno.h>
-
-#include <core/System.h>
 #include <core/Options.h>
-#include <stack/ThrowHandler.h>
+
+#include <stdlib.h>
+#include <string.h>
 
 namespace exray {
 

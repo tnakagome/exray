@@ -3,6 +3,9 @@
 #include <cxxabi.h>
 #include <stdlib.h>
 
+#include <list>
+#include <string>
+
 using namespace exray;
 
 ExceptionHandler::ExceptionHandler():
