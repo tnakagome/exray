@@ -17,6 +17,8 @@
 #include <execinfo.h>
 #include <cxxabi.h>
 
+#include <string>
+
 #define THREAD_ID_LENGTH 20
 
 using namespace exray;
@@ -91,16 +93,17 @@ void StackHandler::dumpMangled(int loop, char *traceString[])
 /**
  * Convert a mangled C++ function name into human readable string.
  *
- * @return the char array containing demangled frame string.
- * Caller must delete the pointer.
+ * @return string containing demangled frame string.
  */
-char *StackHandler::demangleFrame(char *frame)
+std::string StackHandler::demangleFrame(char *frame)
 {
+    std::string result;
+
     regmatch_t pmatch[REGEX_BUFFER];
     int ret = regexec(&framePattern, frame, REGEX_BUFFER, pmatch, 0);
     if (ret != 0) {
         // probably not a mangled name
-        return NULL;
+        return result;
     }
 
     int begin  = pmatch[2].rm_so;
@@ -108,7 +111,7 @@ char *StackHandler::demangleFrame(char *frame)
     int length = end - begin + 1;
     if (length <= 1) {
         // there may be no function name in the frame
-        return NULL;
+        return result;
     }
 
     char *mangled = new char[length];
@@ -120,29 +123,25 @@ char *StackHandler::demangleFrame(char *frame)
 
     int status;
     char *demangled = abi::__cxa_demangle(mangled, NULL, NULL, &status);
+    delete[] mangled;
     if (status != 0) { // demangle failed
-        delete[] mangled;
-        return NULL;
+        return result;
     }
 
-    char *result = new char[pmatch[0].rm_eo * 2]; // blindly allocate double the input string.
-    destIndex = 0;
     // copy library or program name
     for (srcIndex = pmatch[1].rm_so; srcIndex <= pmatch[1].rm_eo; srcIndex++) {
-        result[destIndex++] = frame[srcIndex];
+        result.push_back(frame[srcIndex]);
     }
     // copy demangled function
     int demangledLength = strlen(demangled);
     for (srcIndex = 0; srcIndex < demangledLength; srcIndex++) {
-        result[destIndex++] = demangled[srcIndex];
+        result.push_back(demangled[srcIndex]);
     }
     free(demangled);
     // copy the rest
     for (srcIndex = pmatch[3].rm_so; srcIndex < pmatch[3].rm_eo; srcIndex++) {
-        result[destIndex++] = frame[srcIndex];
+        result.push_back(frame[srcIndex]);
     }
-    result[destIndex] = '\0';
-    delete[] mangled;
     return result;
 }
 
@@ -150,23 +149,21 @@ void StackHandler::dumpDemangled(int loop, char *traceString[])
 {
     int currentFrame = SKIP_FRAMES;
     for (int i = 1; i <= loop; i++, currentFrame++) {
-        char *demangled = demangleFrame(this->traceStrings[currentFrame]);
-        if (demangled == NULL) {
+        std::string demangled = demangleFrame(this->traceStrings[currentFrame]);
+        if (demangled.length() == 0) {
             Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
         }
         else {
-            Logger::printf("%s#%d: %s\n", threadID, i, demangled);
-            delete[] demangled;
+            Logger::printf("%s#%d: %s\n", threadID, i, demangled.c_str());
         }
     }
 }
 
-void StackHandler::dumpVerboseFrames(int depth, char *traceStrings[])
-{
-    if (depth <= SKIP_FRAMES || traceStrings == NULL)
+void StackHandler::dumpVerboseFrames() {
+    if (frameCount <= SKIP_FRAMES || traceStrings == NULL)
         return;
 
-    depth -= SKIP_FRAMES;
+    int depth = frameCount - SKIP_FRAMES;
 
     Logger::printf("%sStack Frames\n", threadID);
 
