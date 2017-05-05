@@ -5,6 +5,8 @@
 #include <pthread.h>
 #include <regex.h>
 
+#include <string>
+
 #define STACKSIZE 100
 #define THREAD_ID_LENGTH 20
 #define REGEX_BUFFER 4
@@ -33,7 +35,7 @@ protected:
                                  ~StackHandler          ();
 
             void                  captureFrames         ();
-            void                  dumpVerboseFrames     (int frameCount, char *traceString[]);
+            void                  dumpVerboseFrames     ();
 
             struct timeval        timestamp;
             char                  threadID[THREAD_ID_LENGTH];
@@ -46,7 +48,7 @@ private:
 
             void                  dumpMangled           (int frameCount, char *traceString[]);
             void                  dumpDemangled         (int frameCount, char *traceString[]);
-            char                 *demangleFrame         (char *frame);
+            std::string           demangleFrame         (char *frame);
 
             regmatch_t            pmatch[REGEX_BUFFER]; // frame pattern is split into 3 parts + entire match.
 };

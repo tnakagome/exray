@@ -40,13 +40,14 @@ void CatchHandler::dumpHeader(const char *origin)
                    this->timestamp.tv_usec);
 }
 
-void CatchHandler::dumpVerboseFrames(const char *origin, int frameCount, char *traceStrings[])
+void CatchHandler::dumpVerboseFrames(const char *origin)
 {
     Guardian g(dumpLock);
 
-    dumpHeader(origin);
     if (traceStrings == NULL)
         return;
+
+    dumpHeader(origin);
 
     if (this->exceptionType[0] != '\0') {
         char *exceptionString;
@@ -61,7 +62,7 @@ void CatchHandler::dumpVerboseFrames(const char *origin, int frameCount, char *t
                            this->threadID, this->exceptionType);
         }
     }
-    StackHandler::dumpVerboseFrames(frameCount, traceStrings);
+    StackHandler::dumpVerboseFrames();
 }
 
 void CatchHandler::dumpFrames(const char *origin)
@@ -69,6 +70,6 @@ void CatchHandler::dumpFrames(const char *origin)
     if (this->exceptionCaught == false || filterExceptions() == true || active == false) {
         return;
     }
-    dumpVerboseFrames(origin, this->frameCount, this->traceStrings);
+    dumpVerboseFrames(origin);
     this->exceptionCaught = false;
 }

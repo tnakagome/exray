@@ -44,13 +44,14 @@ void ThrowHandler::dumpHeader(const char *origin)
                    this->timestamp.tv_usec);
 }
 
-void ThrowHandler::dumpVerboseFrames(const char *origin, int frameCount, char *traceStrings[])
+void ThrowHandler::dumpVerboseFrames(const char *origin)
 {
     Guardian g(dumpLock);
 
-    dumpHeader(origin);
     if (traceStrings == NULL)
         return;
+
+    dumpHeader(origin);
 
     char *exceptionString;
     bool success = demangleException(&exceptionString);
@@ -63,13 +64,13 @@ void ThrowHandler::dumpVerboseFrames(const char *origin, int frameCount, char *t
         Logger::printf("%sException Type (Mangled): %s\n",
                        this->threadID, this->exceptionType);
     }
-    StackHandler::dumpVerboseFrames(frameCount, traceStrings);
+    StackHandler::dumpVerboseFrames();
 }
 
 void ThrowHandler::dumpFrames(const char *origin) {
     if (this->exceptionThrown == false || filterExceptions() == true || active == false) {
         return;
     }
-    dumpVerboseFrames(origin, this->frameCount, this->traceStrings);
+    dumpVerboseFrames(origin);
     this->exceptionThrown = false;
 }

@@ -56,7 +56,7 @@ void CallStackHandler::dumpFrames(const char *origin, void *object)
                        ptr[24], ptr[25], ptr[26], ptr[27], ptr[28], ptr[29], ptr[30], ptr[31]);
     }
 
-    dumpVerboseFrames(this->frameCount, this->traceStrings);
+    dumpVerboseFrames();
 }
 
 /**
@@ -81,5 +81,5 @@ void CallStackHandler::dumpFrames(const char *origin, const char *str)
         Logger::printf("%sString Value  : %s\n",   this->threadID, str);
     }
 
-    dumpVerboseFrames(this->frameCount, this->traceStrings);
+    dumpVerboseFrames();
 }

@@ -18,7 +18,7 @@ public:
                              ThrowHandler          ();
             void             captureFrames         (const std::type_info &, const char *);
             void             dumpFrames            (const char *);
-            void             dumpVerboseFrames     (const char *, int, char *[]);
+            void             dumpVerboseFrames     (const char *);
 private:
             void             dumpHeader            (const char *);
 

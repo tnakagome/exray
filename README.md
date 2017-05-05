@@ -168,7 +168,7 @@ If you want to derive the original function name from this mangled name, use c++
 
 - If log file is empty and you see stack frames in your console, the target program may have closed all file descriptors including the one that this library had opened. In this case, try using subshell to redirect all outputs to a file with parenthesis.
 
-    $ ( LD_PRELOAD=./libexray libreoffice ) > exray-output.txt
+    $ ( LD_PRELOAD=./libexray.so libreoffice ) > exray-output.txt 2>&1
 
 # Mechanism
 Fundamentally this is a collection of wrappers around OS library functions including 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at arbitrary execution points.
