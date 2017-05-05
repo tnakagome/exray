@@ -129,19 +129,11 @@ std::string StackHandler::demangleFrame(char *frame)
     }
 
     // copy library or program name
-    for (srcIndex = pmatch[1].rm_so; srcIndex <= pmatch[1].rm_eo; srcIndex++) {
-        result.push_back(frame[srcIndex]);
-    }
+    result.append(frame+pmatch[1].rm_so, (pmatch[1].rm_eo - pmatch[1].rm_so + 1));
     // copy demangled function
-    int demangledLength = strlen(demangled);
-    for (srcIndex = 0; srcIndex < demangledLength; srcIndex++) {
-        result.push_back(demangled[srcIndex]);
-    }
-    free(demangled);
+    result.append(demangled);
     // copy the rest
-    for (srcIndex = pmatch[3].rm_so; srcIndex < pmatch[3].rm_eo; srcIndex++) {
-        result.push_back(frame[srcIndex]);
-    }
+    result.append(frame+pmatch[3].rm_so, (pmatch[3].rm_eo - pmatch[3].rm_so + 1));
     return result;
 }
 
