@@ -134,6 +134,7 @@ std::string StackHandler::demangleFrame(char *frame)
     result.append(demangled);
     // copy the rest
     result.append(frame+pmatch[3].rm_so, (pmatch[3].rm_eo - pmatch[3].rm_so + 1));
+    free(demangled);
     return result;
 }
 
