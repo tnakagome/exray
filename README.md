@@ -28,7 +28,7 @@ In order to build the library, sync the source code to your Linux box and run ma
 
 The binary is 64-bit by default. In case you need a 32-bit version of libexray, you can configure the bitness of the build to 32. Edit the 'BUILD_MODE' at the beginning of the Makefile at the top level.
 
-Support for std::rethrow_exception (C++11) in enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the 'CPP_MODE' in the Makefile at the top level.
+Support for std::rethrow_exception (C++11) is enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the 'CPP_MODE' in the Makefile at the top level.
 
 # Usage
 You can attach the library to an application when you run it, like this
@@ -145,11 +145,11 @@ Use comma as delimiter when specifying multiple options.
 ### Option Values
 
 - demangle : Demangle function names within stack frames whenever possible. This is disabled by default.
-- exitonly : Only write the latest call stack when exit() is called in the target application, and all exceptions after exit() is called.
+- exitonly : Only write the latest exception call stacks when exit() is called in the target application, and all exceptions after exit() is called.
 - logfile=filename : The library writes information to stderr by default. This option redirects the output to specified file.
 - maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
 - outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. you can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
-- pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build. See the .cpp file for the target pthread functions.
+- pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build (modules.mk). See the .cpp file for the target pthread functions.
 
 # Symbol Demangling
 C++ function names in the stack traces are mangled unless you use the demangle option. For example, you may see this function name in a back trace from libreoffice:
@@ -166,7 +166,7 @@ If you want to derive the original function name from this mangled name, use c++
 
 - In case you want to enhance this library, it is not possible to interpose functions within the ELF executable itself. Only functions defined in shared libraries can be interposed and analyzed.
 
-- If log file is empty and you see stack frames in your console, the target program may have closed all file descriptors including the one that this library had opened. In this case, try using subshell to redirect all outputs to a file with parenthesis.
+- If log file is empty and you see stack frames in your console, the target program may have closed all file descriptors including the one that this library had opened for logging. In this case, try using subshell to redirect all outputs to a file with parenthesis.
 
     $ ( LD_PRELOAD=./libexray.so libreoffice ) > exray-output.txt 2>&1
 
