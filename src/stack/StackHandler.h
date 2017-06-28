@@ -46,8 +46,8 @@ protected:
 private:
     static  regex_t               framePattern;
 
-            void                  dumpMangled           (int frameCount, char *traceString[]);
-            void                  dumpDemangled         (int frameCount, char *traceString[]);
+            void                  dumpMangled           (int frameCount);
+            void                  dumpDemangled         (int frameCount);
             std::string           demangleFrame         (char *frame);
 
             regmatch_t            pmatch[REGEX_BUFFER]; // frame pattern is split into 3 parts + entire match.

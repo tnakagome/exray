@@ -82,7 +82,7 @@ StackHandler::~StackHandler()
 // Ignore the first 2 frames that belong to this library
 #define SKIP_FRAMES 2
 
-void StackHandler::dumpMangled(int loop, char *traceString[])
+void StackHandler::dumpMangled(int loop)
 {
     int currentFrame = SKIP_FRAMES;
     for (int i = 1; i <= loop; i++, currentFrame++) {
@@ -138,7 +138,7 @@ std::string StackHandler::demangleFrame(char *frame)
     return result;
 }
 
-void StackHandler::dumpDemangled(int loop, char *traceString[])
+void StackHandler::dumpDemangled(int loop)
 {
     int currentFrame = SKIP_FRAMES;
     for (int i = 1; i <= loop; i++, currentFrame++) {
@@ -162,10 +162,10 @@ void StackHandler::dumpVerboseFrames() {
 
     int loop = (Options::maxFrames < depth) ? Options::maxFrames : depth;
     if (Options::demangleFunction) {
-        dumpDemangled(loop, traceStrings);
+        dumpDemangled(loop);
     }
     else {
-        dumpMangled(loop, traceStrings);
+        dumpMangled(loop);
     }
     free(this->traceStrings);
     this->traceStrings = NULL;
