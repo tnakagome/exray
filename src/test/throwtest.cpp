@@ -159,13 +159,13 @@ int main(int argc, char **argv)
     for (int i = 0; i < THREADS; i++) {
         char *message;
         pthread_join(thread[i], (void **)&message);
-        if (message != NULL) {
-            pid_t pid = getpid();
-            std::ostringstream ss;
-            ss << pid << ": thread #" << i << " returned successfully" << std::endl;
+        pid_t pid = getpid();
+        std::ostringstream ss;
+        ss << pid << ": thread #" << i << " returned successfully" << std::endl;
+        if (message != NULL && message != (void *)-1) {
             ss << pid << ": thread #" << i << " " << message << std::endl;
-            std::cerr << ss.str();
         }
+        std::cerr << ss.str();
     }
 
     pthread_mutex_destroy(&testLock);
