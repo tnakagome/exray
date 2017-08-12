@@ -1,8 +1,3 @@
-//
-// Use 'addr2line -e program ADDR' in order to decode addresses in stack frames.
-// Use 'c++filt -t SYMBOL' in order to decode C++ mangled symbols like "Ss".
-//
-
 #include <stack/StackHandler.h>
 #include <core/Options.h>
 #include <core/System.h>
@@ -47,6 +42,9 @@ regex_t             StackHandler::framePattern;
  */
 static const char *FRAME_PATTERN_REGEX = "^([^(]+)\\(([^\\+]*)(\\+.*)$";
 
+/**
+ * Static initializer
+ */
 void StackHandler::init()
 {
     pthread_mutexattr_init(&lockAttr);
@@ -56,6 +54,9 @@ void StackHandler::init()
     StackHandler::active = true;
 }
 
+/**
+ * Static finalizer
+ */
 void StackHandler::finish()
 {
     active = false;
@@ -82,6 +83,9 @@ StackHandler::~StackHandler()
 // Ignore the first 2 frames that belong to this library
 #define SKIP_FRAMES 2
 
+/**
+ * Write stack frames without demangling function names.
+ */
 void StackHandler::dumpMangled(int loop)
 {
     int currentFrame = SKIP_FRAMES;
@@ -91,9 +95,9 @@ void StackHandler::dumpMangled(int loop)
 }
 
 /**
- * Convert a mangled C++ function name into human readable string.
+ * Convert a mangled C++ function name in s stack frame into human readable string.
  *
- * @return string containing demangled frame string.
+ * @return string containing demangled function name.
  */
 std::string StackHandler::demangleFrame(char *frame)
 {
@@ -129,15 +133,18 @@ std::string StackHandler::demangleFrame(char *frame)
     }
 
     // copy library or program name
-    result.append(frame+pmatch[1].rm_so, (pmatch[1].rm_eo - pmatch[1].rm_so + 1));
+    result.append(frame + pmatch[1].rm_so, (pmatch[1].rm_eo - pmatch[1].rm_so + 1));
     // copy demangled function
     result.append(demangled);
     // copy the rest
-    result.append(frame+pmatch[3].rm_so, (pmatch[3].rm_eo - pmatch[3].rm_so + 1));
+    result.append(frame + pmatch[3].rm_so, (pmatch[3].rm_eo - pmatch[3].rm_so + 1));
     free(demangled);
     return result;
 }
 
+/**
+ * Write stack frames. Function names will be demangled.
+ */
 void StackHandler::dumpDemangled(int loop)
 {
     int currentFrame = SKIP_FRAMES;
@@ -152,6 +159,9 @@ void StackHandler::dumpDemangled(int loop)
     }
 }
 
+/**
+ * Write current stack frames.
+ */
 void StackHandler::dumpVerboseFrames() {
     if (frameCount <= SKIP_FRAMES || traceStrings == NULL)
         return;
@@ -171,6 +181,9 @@ void StackHandler::dumpVerboseFrames() {
     this->traceStrings = NULL;
 }
 
+/**
+ * capture current stack frames and stores them for later use.
+ */
 void StackHandler::captureFrames()
 {
     // avoid deadlock/infinite loop

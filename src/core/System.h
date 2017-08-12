@@ -15,6 +15,8 @@ typedef int (*PthreadMutexUnlockFuncPtr)(pthread_mutex_t *);
  *
  * - Provides interface to pthread_mutex_lock and unlock
  *   in order to avoid infinite loop with interposing functions.
+ *
+ * - Manages thread unwinding state and thread backtrace state.
  */
 class System
 {

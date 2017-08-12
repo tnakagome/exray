@@ -7,6 +7,9 @@
 
 #include <stdlib.h>
 
+/**
+ * Initializes various parts of the library when it is loaded into memory.
+ */
 __attribute__((constructor))
 void exray::exray_init()
 {
@@ -22,6 +25,9 @@ void exray::exray_init()
     atexit(System::atexitHandler);
 }
 
+/**
+ * Clean up the library when it is unloaded from memory.
+ */
 __attribute__((destructor))
 void exray::exray_finish()
 {

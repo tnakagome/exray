@@ -8,6 +8,9 @@
 
 using namespace exray;
 
+/**
+ * Base class for ThrowHandler and CatchHandler
+ */
 ExceptionHandler::ExceptionHandler():
     StackHandler()
 {
@@ -32,6 +35,12 @@ bool ExceptionHandler::demangleException(char **destination)
     }
 }
 
+/**
+ * Determines whether current exception should be filtered out.
+ *
+ * @return true if current exception matches one of the output filter entries.
+ * In this case, the caller should not dump current stack frames.
+ */
 bool ExceptionHandler::filterExceptions()
 {
     if (! Options::outputFilters().empty()) {

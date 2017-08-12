@@ -1,8 +1,8 @@
-#ifndef __LINK_INITIALIZER__
-#define __LINK_INITIALIZER__
+#ifndef __INITIALIZER__
+#define __INITIALIZER__
 
 namespace exray {
-  void exray_finish();
-  void exray_init();
+    void exray_finish();
+    void exray_init();
 };
 #endif

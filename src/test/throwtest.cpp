@@ -26,9 +26,10 @@ static void log(const char *id, const std::ostringstream &message)
 {
     pthread_mutex_lock(&testLock);
     std::ostringstream ss;
-    ss << getpid() << "[" << syscall(SYS_gettid) << "]: "
+    ss << getpid() << "[" << syscall(SYS_gettid) << "] "
        << id << ": " << message.str() << std::endl;
     std::cerr << ss.str();
+    std::cerr.flush();
     pthread_mutex_unlock(&testLock);
 }
 
@@ -112,6 +113,7 @@ void *test_pthread_cancel(void *args)
         ss << "caught exception after looping " << count << " times";
         log(id, ss);
         pthread_cancel(pthread_self());
+        return NULL;
     }
     return (void *)"test_pthread_cancel() no exceptions";
 }
@@ -161,9 +163,9 @@ int main(int argc, char **argv)
         pthread_join(thread[i], (void **)&message);
         pid_t pid = getpid();
         std::ostringstream ss;
-        ss << pid << ": thread #" << i << " returned successfully" << std::endl;
+        ss << pid << " thread #" << i << " returned successfully" << std::endl;
         if (message != NULL && message != (void *)-1) {
-            ss << pid << ": thread #" << i << " " << message << std::endl;
+            ss << pid << " thread #" << i << " " << message << std::endl;
         }
         std::cerr << ss.str();
     }

@@ -10,7 +10,7 @@ namespace exray {
 class ExceptionHandler : public StackHandler
 {
 public:
-                             ExceptionHandler();
+                             ExceptionHandler      ();
 protected:
             bool             demangleException     (char **);
             bool             filterExceptions      ();

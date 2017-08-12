@@ -6,14 +6,16 @@
 #include <unistd.h>
 #include <errno.h>
 
-bool exray::Logger::initialized = false;
-int  exray::Logger::logFD       = -1;
-bool exray::Logger::writeToFile = false;
+using namespace exray;
+
+bool Logger::initialized = false;
+int  Logger::logFD       = -1;
+bool Logger::writeToFile = false;
 
 /**
  * Default logger that writes messages to stderr.
  */
-bool exray::Logger::init()
+bool Logger::init()
 {
     logFD = 2; // stderr
     initialized = true;
@@ -24,7 +26,7 @@ bool exray::Logger::init()
  * File logger.
  * Useful when the target application disables screen output by redirecting them to a blackhole.
  */
-bool exray::Logger::init(const char *path)
+bool Logger::init(const char *path)
 {
     logFD = open(path, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
     if (logFD == -1) {
@@ -41,7 +43,7 @@ bool exray::Logger::init(const char *path)
 
 #define LOG_BUFFER_SIZE 512
 
-bool exray::Logger::printf(const char *format, ...)
+bool Logger::printf(const char *format, ...)
 {
     if (initialized == false)
         return false;
@@ -61,7 +63,7 @@ bool exray::Logger::printf(const char *format, ...)
     }
 }
 
-bool exray::Logger::write(const char *message)
+bool Logger::write(const char *message)
 {
     if (initialized == false)
         return false;
@@ -73,7 +75,7 @@ bool exray::Logger::write(const char *message)
         return false;
 }
 
-void exray::Logger::finish()
+void Logger::finish()
 {
     if (writeToFile)
         close(logFD);

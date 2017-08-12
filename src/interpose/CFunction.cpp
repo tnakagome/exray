@@ -11,7 +11,6 @@
 
 using namespace exray;
 
-
 typedef void  (*ExitFuncPtr)(int);
 typedef int   (*OpenFuncPtr)(const char *, int, int);
 typedef void* (*DlopenFuncPtr)(const char *, int);
@@ -30,8 +29,8 @@ extern "C"
 {
     void exit(int status)
     {
-        if (exray::CFunc::exit == NULL) {
-            exray::CFunc::exit = (ExitFuncPtr)exray::Interpose::loadFuncPtr("exit");
+        if (CFunc::exit == NULL) {
+            CFunc::exit = (ExitFuncPtr)Interpose::loadFuncPtr("exit");
         }
 
         StackHandler::setExitCalled();
@@ -44,38 +43,38 @@ extern "C"
         if (catchHandler != NULL)
             catchHandler->dumpFrames("exit() (Last exception caught in the thread)");
 
-        exray::CFunc::exit(status);
+        CFunc::exit(status);
     }
 
+    // More examples on how you would add stack dump functionality to C functions.s
 #if 0
     int open(const char *pathname, int flags, int mode)
     {
-        if (exray::CFunc::open == NULL) {
-            exray::CFunc::open = (OpenFuncPtr)exray::Interpose::loadFuncPtr("open");
+        if (CFunc::open == NULL) {
+            CFunc::open = (OpenFuncPtr)Interpose::loadFuncPtr("open");
         }
         CallStackHandler handler;
         handler.dumpFrames("open()", pathname);
-        return exray::CFunc::open(pathname, flags, mode);
+        return CFunc::open(pathname, flags, mode);
     }
 
     void *dlopen(const char *filename, int flag)
     {
-        if (exray::CFunc::dlopen == NULL) {
-            exray::CFunc::dlopen = (DlopenFuncPtr)exray::Interpose::loadFuncPtr("dlopen");
+        if (CFunc::dlopen == NULL) {
+            CFunc::dlopen = (DlopenFuncPtr)Interpose::loadFuncPtr("dlopen");
         }
         CallStackHandler handler;
         handler.dumpFrames("dlopen()", filename);
-        return exray::CFunc::dlopen(filename, flag);
+        return CFunc::dlopen(filename, flag);
     }
 
     int dlclose(void *handle)
     {
-        if (exray::CFunc::dlclose == NULL) {
-            exray::CFunc::dlclose = (DlcloseFuncPtr)exray::Interpose::loadFuncPtr("dlclose");
+        if (CFunc::dlclose == NULL) {
+            CFunc::dlclose = (DlcloseFuncPtr)Interpose::loadFuncPtr("dlclose");
         }
         CallStackHandler handler;
         handler.dumpFrames("dlclose()", handle);
-        return exray::CFunc::dlclose(handle);
     }
 #endif
 }

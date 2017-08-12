@@ -5,6 +5,10 @@
 
 using namespace exray;
 
+/**
+ * A utility class that enables stack dumps from arbitrary C and C++ functions.
+ * See interpose/CFunction.cpp and interpose/PThread.cpp for example use of this class.
+ */
 CallStackHandler::CallStackHandler():
     StackHandler()
 {

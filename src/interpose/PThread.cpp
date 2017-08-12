@@ -98,10 +98,10 @@ extern "C"
 
         if (Options::pthreadDump) {
             ThrowHandler *throwHandler = System::getThrowHandler();
-            throwHandler->dumpFrames("exit() (Last exception thrown in the thread)");
+            throwHandler->dumpFrames("pthread_cancel() (Last exception thrown in the thread)");
 
             CatchHandler *catchHandler = System::getCatchHandler();
-            catchHandler->dumpFrames("exit() (Last exception caught in the thread)");
+            catchHandler->dumpFrames("pthread_cancel() (Last exception caught in the thread)");
         }
 
         return PThread::cancel(tid);

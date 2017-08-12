@@ -21,12 +21,18 @@ bool                       System::initialized      = false;
 PthreadMutexLockFuncPtr    System::mutexLockQuiet   = NULL;
 PthreadMutexUnlockFuncPtr  System::mutexUnlockQuiet = NULL;
 
+/**
+ * Initializer
+ */
 void System::init()
 {
     pthread_once(&keyInitializer, createDestructionKey);
     initialized = true;
 }
 
+/**
+ * Finalizer
+ */
 void System::finish()
 {
     if (throwHandlerKey != 0) {
@@ -47,6 +53,12 @@ void System::finish()
     }
 }
 
+/**
+ * @return the function pointer to pthread_mutex_lock() provided by the OS.
+ * Simply writing pthread_mutex_lock(...) may invoke the interposing code
+ * depending on the build configuration, but it may not be ideal.
+ * Call this function to directly invoke the OS implementation.
+ */
 PthreadMutexLockFuncPtr System::getMutexLockFunc()
 {
     if (mutexLockQuiet == NULL)
@@ -54,6 +66,12 @@ PthreadMutexLockFuncPtr System::getMutexLockFunc()
     return mutexLockQuiet;
 }
 
+/**
+ * @return the function pointer to pthread_mutex_unlock() provided by the OS.
+ * Simply writing pthread_mutex_unlock(...) may invoke the interposing code
+ * depending on the build configuration, but it may not be ideal.
+ * Call this function to directly invoke the OS implementation.
+ */
 PthreadMutexUnlockFuncPtr System::getMutexUnlockFunc()
 {
     if (mutexUnlockQuiet == NULL)
@@ -61,6 +79,11 @@ PthreadMutexUnlockFuncPtr System::getMutexUnlockFunc()
     return mutexUnlockQuiet;
 }
 
+/**
+ * Called when a thread returns.
+ * Dumps the stack frames for the last exception thrown in the thread
+ * if 'exitonly' option is set.
+ */
 void System::throwHandlerDestructor(void *data)
 {
     ThrowHandler *throwHandler = (ThrowHandler *)data;
@@ -70,6 +93,11 @@ void System::throwHandlerDestructor(void *data)
     }
 }
 
+/**
+ * Called when a thread returns.
+ * Dumps the stack frames for the last exception caught in the thread
+ * if 'exitonly' option is set.
+ */
 void System::catchHandlerDestructor(void *data)
 {
     CatchHandler *catchHandler = (CatchHandler *)data;
@@ -95,6 +123,16 @@ void System::unwindingKeyDestructor(void *data)
     }
 }
 
+/**
+ * Initialize thread local data and respective destructors.
+ *
+ * Destructors are the functions specified as the second argument to pthread_key_create().
+ * Each destructor is called when a thread returns.
+ *
+ * throwHandlerDestructor() and catchHandlerDestructor() dumps
+ * stack frames for the last exception generated in the thread
+ * if 'exitonly' option is set.
+ */
 void System::createDestructionKey()
 {
     if (pthread_key_create(&throwHandlerKey, throwHandlerDestructor) != 0) {
@@ -149,6 +187,10 @@ CatchHandler *System::getCatchHandler()
     return catchHandler;
 }
 
+/**
+ * Dump stack frames for the last exception thrown and caught in the main thread
+ * if 'exitonly' option is set.
+ */
 void System::atexitHandler()
 {
     if (isInitialized() == false)
@@ -172,6 +214,9 @@ pid_t System::gettid()
     return syscall(SYS_gettid); // Linux
 }
 
+/**
+ * Whether the current thread is unwinding due to an exception.
+ */
 bool System::isThreadUnwinding()
 {
     bool *threadUnwinding = getThreadUnwinding();
@@ -200,7 +245,6 @@ bool *System::getThreadUnwinding()
     }
     return threadUnwinding;
 }
-
 
 /**
  *  Whether current call stack has backtrace() or backtrace_symbols().
