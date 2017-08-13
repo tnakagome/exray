@@ -2,7 +2,13 @@
 
 This is a pluggable shared library for C++ exception analysis at run-time. There is no need to rebuild target applications. You can attach the library to existing applications at start-up very easily, and see the origin and type of a C++ exception thrown as well as where it is caught. LD_PRELOAD environment variable will do all the magic for you.
 
-It is also very easy to add call stack dumps to arbitrary C/C++ functions by creating wrapper functions around them. Supporting classes and functions already exist in this library. 
+It is also very easy to add call stack dumps to arbitrary C/C++ functions by creating wrapper functions around them. Supporting classes and functions already exist in this library.
+
+# Usage Scenario
+
+A customer have a fairly large C++ program deployed in the production system. It continues to dump cores every once in a while. Your developers have anlyzed cores, but what they tell you is that the cores are due to unhandled exceptions and they cannot do much about it. It is practically impossible to create debug binaries for analysis. After all, the customer will not allow you to casually swap binaries in the production envirpnment. One of the develpers have gave you a debugger script and suggested to trace the exceution by attaching a debugger to the running process, but it only slowed down the execution significantly and the problem disappeared magically. Customer's pressure is getting higher as you are unable to stop the core. You want to get a clue as to the cause of cores so your developers can create a patch.
+
+libexray.so can help you in such cases. By attaching libexray.so to your target program with LD_REPLOAD and restarting it, you can see C++ exception information that the program throws. Run the program until it cores, then give the output along with the core file to your developers. It may help them identify the soure of the problem and hoepfully fix the core.
 
 # Supported Platforms
 
@@ -148,7 +154,7 @@ Use comma as delimiter when specifying multiple options.
 - exitonly : Only write the latest exception call stacks when exit() is called in the target application, and all exceptions after exit() is called.
 - logfile=filename : The library writes information to stderr by default. This option redirects the output to specified file.
 - maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
-- outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. you can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
+- outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. You can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
 - pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build (modules.mk). See the .cpp file for the target pthread functions.
 
 # Symbol Demangling
@@ -164,14 +170,14 @@ If you want to derive the original function name from this mangled name, use c++
 # Tips
 - If your target application throws tons of exceptions and stacks are deep, this library can slow down its execution significantly due to the amount of output it generates. (Frame dumps are serialized by a global mutex.) In such cases, filter out unnecessary exceptions by the "outputfilter" option and limit the number of frames by the "maxframes" option.
 
-- In case you want to enhance this library, it is not possible to interpose functions within the ELF executable itself. Only functions defined in shared libraries can be interposed and analyzed.
+- In case you want to enhance this library, it is not possible to interpose functions within the ELF executable itself, i.e., the program with main() function. Only functions defined in shared libraries can be interposed and analyzed.
 
 - If log file is empty and you see stack frames in your console, the target program may have closed all file descriptors including the one that this library had opened for logging. In this case, try using subshell to redirect all outputs to a file with parenthesis.
 
     $ ( LD_PRELOAD=./libexray.so libreoffice ) > exray-output.txt 2>&1
 
 # Mechanism
-Fundamentally this is a collection of wrappers around OS library functions including 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at arbitrary execution points.
+Fundamentally this is a collection of wrappers around OS library functions including 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at an arbitrary execution point.
 
 LD\_PRELOAD and dlsym() are OS facilities that allow you to add functionality to or even completely replace functions in shared libraries. With the help of these facilities, this library grabs calls to C++ throw and catch statements in libstdc++.so.
 
