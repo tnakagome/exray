@@ -41,6 +41,10 @@ You can attach the library to an application when you run it, like this
 
     $ LD_PRELOAD=./libexray.so <command line>
 
+If your target program forks, or is a wrapper script, export the LD_PRELOAD variable.
+
+    $ export LD_PRELOAD=./libexray.so <command line>
+
 # Example
 Real-world application examples of libexray are in the [Wiki](https://github.com/tnakagome/exray/wiki).
 
