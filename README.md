@@ -6,9 +6,9 @@ It is also very easy to add call stack dumps to arbitrary C/C++ functions by cre
 
 # Usage Scenario
 
-A customer have a fairly large C++ program deployed in the production system. It continues to dump cores every once in a while. Your developers have analyzed cores, but what they tell you is that the cores are due to unhandled exceptions and they cannot do much about it. It is practically impossible to create debug binaries for analysis. After all, the customer will not allow you to casually swap binaries in the production environment. One of the developers have gave you a debugger script and suggested to trace the execution by attaching a debugger to the running process, but it only slowed down the execution significantly and the problem disappeared magically. Customer's pressure is getting higher as you are unable to stop the core. You want to get a clue as to the cause of cores so your developers can create a patch.
+A customer have a fairly large C++ program deployed in the production system. It continues to dump cores every once in a while. Your developers have analyzed cores, but what they tell you is that the cores are due to unhandled exceptions and they cannot do much about it. It is practically impossible to create debug binaries for analysis. After all, the customer will not allow you to casually swap binaries in the production environment. One of the developers have gave you a debugger script and suggested to trace the execution by attaching a debugger to the running process, but it only slowed down the execution significantly and the problem disappeared magically. Customer's pressure is escalating as you are unable to stop the core. You want to get a clue as to the cause of cores so your developers can create a patch.
 
-libexray.so can help you in such cases. By restarting your program with libexray.so attached by LD_PRELOAD, you can see C++ exception information that the program throws. Run the program until it cores, then give the output along with the core file to your developers. It may help them identify the source of the problem and hopefully fix the core.
+libexray.so can help you in such a case. By restarting your program with libexray.so attached by LD_PRELOAD, you can see C++ exception information that the program throws. Run the program until it cores, then give the output along with the core file to your developers. It may help them identify the source of the problem and hopefully fix the core.
 
 # Supported Platforms
 
@@ -34,7 +34,7 @@ In order to build the library, sync the source code to your Linux box and run ma
 
 The binary is 64-bit by default. In case you need a 32-bit version of libexray, you can configure the bitness of the build to 32. Edit the 'BUILD_MODE' at the beginning of the Makefile at the top level.
 
-Support for std::rethrow_exception (C++11) is enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the 'CPP_MODE' in the Makefile at the top level.
+Support for std::rethrow_exception (C++11) is enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the 'CPP_MODE' in the Makefile at the top level. (The existence of rethrow_exception in libexray should not interfere with C++98 binary execution though.)
 
 # Usage
 You can attach the library to an application when you run it, like this
@@ -181,7 +181,7 @@ If you want to derive the original function name from this mangled name, use c++
     $ ( LD_PRELOAD=./libexray.so libreoffice ) > exray-output.txt 2>&1
 
 # Mechanism
-Fundamentally this is a collection of wrappers around OS library functions including 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at an arbitrary execution point.
+Fundamentally this is a collection of wrappers around OS library functions including 'exit()', 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at an arbitrary execution point.
 
 LD\_PRELOAD and dlsym() are OS facilities that allow you to add functionality to or even completely replace functions in shared libraries. With the help of these facilities, this library grabs calls to C++ throw and catch statements in libstdc++.so.
 
@@ -190,4 +190,4 @@ G++ translates throw and catch statements into these function calls, which resid
     __cxa_throw()
     __cxa_begin_catch()
 
-libexray.so adds back trace functionality to these functions and std::rethrow_exception() by interposing calls to them and writing back traces from there.
+libexray.so adds back trace functionality to these functions and std::rethrow_exception() as well as exit() by interposing calls to them and writing back traces from there.

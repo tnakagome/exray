@@ -81,7 +81,7 @@ PthreadMutexUnlockFuncPtr System::getMutexUnlockFunc()
 
 /**
  * Called when a thread returns.
- * Dumps the stack frames for the last exception thrown in the thread
+ * Dumps the stack frames for the last exception thrown in the thread.
  * if 'exitonly' option is set.
  */
 void System::throwHandlerDestructor(void *data)
@@ -95,7 +95,7 @@ void System::throwHandlerDestructor(void *data)
 
 /**
  * Called when a thread returns.
- * Dumps the stack frames for the last exception caught in the thread
+ * Dumps the stack frames for the last exception caught in the thread.
  * if 'exitonly' option is set.
  */
 void System::catchHandlerDestructor(void *data)

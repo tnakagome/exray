@@ -46,7 +46,7 @@ extern "C"
         CFunc::exit(status);
     }
 
-    // More examples on how you would add stack dump functionality to C functions.s
+    // More examples on how you would add stack dump functionality to C functions.
 #if 0
     int open(const char *pathname, int flags, int mode)
     {

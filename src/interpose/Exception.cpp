@@ -31,7 +31,7 @@ extern "C"
 {
     /**
      * The compiler will translate "throw" statement into this function call.
-     * libexray.so interposes this function, add stack dump functionality to the function,
+     * libexray.so interposes this function, adds stack dump functionality to the function,
      * and calls the original __cxa_throw() defined in the OS library.
      */
     void __cxa_throw(void *thrownException,
@@ -52,7 +52,7 @@ extern "C"
     /**
      * The compiler will translate "catch()" statement into __cxa_begin_catch() and
      * __cxa_end_catch().
-     * libexray.so interposes __cxa_begin_catch() function, add stack dump functionality
+     * libexray.so interposes __cxa_begin_catch() function, adds stack dump functionality
      * to the function, and calls the original __cxa_begin_catch() defined in the OS library.
      */
     void *__cxa_begin_catch(void *exceptionObject) throw()
