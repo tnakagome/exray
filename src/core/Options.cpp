@@ -10,6 +10,7 @@ bool          Options::pthreadDump      = false;
 int           Options::maxFrames        = 100;
 char         *Options::logFileName      = NULL;
 bool          Options::demangleFunction = false;
+bool          Options::reverseIndex     = false;
 
 StringList& Options::outputFilters()
 {
@@ -66,6 +67,10 @@ namespace OptionParser {
      *  pthread   : Turn on capturing of stack frames in some pthread functions.
      *              src/interpose/PThred.cpp must be included in the build
      *              if you want to use this option.
+     *
+     *  rindex    : Reverse the index for each frame.
+     *              Frame index starts from 1 by default.
+     *              This option will reverse the index.
      */
     void parseOptions()
     {
@@ -101,6 +106,9 @@ namespace OptionParser {
                 else if (strstr(value, LOGFILE_OPT) != NULL) {
                     parseLogFilename(value + strlen(LOGFILE_OPT));
                 }
+		else if  (strcmp(value, "rindex") == 0) {
+		    Options::reverseIndex = true;
+		}
                 value = strtok_r(NULL, OPTION_DELIMITER, &saveptr);
             }
         }

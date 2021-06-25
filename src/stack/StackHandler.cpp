@@ -90,7 +90,10 @@ void StackHandler::dumpMangled(int loop)
 {
     int currentFrame = SKIP_FRAMES;
     for (int i = 1; i <= loop; i++, currentFrame++) {
-        Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
+        int index = i;
+        if (Options::reverseIndex)
+            index = loop - i + 1;
+        Logger::printf("%s#%d: %s\n", threadID, index, this->traceStrings[currentFrame]);
     }
 }
 
@@ -150,11 +153,14 @@ void StackHandler::dumpDemangled(int loop)
     int currentFrame = SKIP_FRAMES;
     for (int i = 1; i <= loop; i++, currentFrame++) {
         std::string demangled = demangleFrame(this->traceStrings[currentFrame]);
+        int index = i;
+        if (Options::reverseIndex)
+            index = loop - i + 1;
         if (demangled.length() == 0) {
-            Logger::printf("%s#%d: %s\n", threadID, i, this->traceStrings[currentFrame]);
+            Logger::printf("%s#%d: %s\n", threadID, index, this->traceStrings[currentFrame]);
         }
         else {
-            Logger::printf("%s#%d: %s\n", threadID, i, demangled.c_str());
+            Logger::printf("%s#%d: %s\n", threadID, index, demangled.c_str());
         }
     }
 }

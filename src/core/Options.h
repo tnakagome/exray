@@ -14,6 +14,7 @@ namespace exray {
         static int         maxFrames;
         static char       *logFileName;
         static bool        demangleFunction;
+        static bool        reverseIndex;
         
         static StringList& outputFilters();
     };

@@ -160,6 +160,7 @@ Use comma as delimiter when specifying multiple options.
 - maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
 - outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. You can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
 - pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build (modules.mk). See the .cpp file for the target pthread functions.
+- rindex : Reverse the index for each frame. Frame index starts from 1 by default. This option will reverse the index. It may be easier to get the number of frames unwound between the throw and catch stack dumps for an exception.
 
 # Symbol Demangling
 C++ function names in the stack traces are mangled unless you use the demangle option. For example, you may see this function name in a back trace from libreoffice:
