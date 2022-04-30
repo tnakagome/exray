@@ -30,11 +30,11 @@ There are known compatibility issues with other libraries.
 - jemalloc - libexray.so will only work with jemalloc if you do NOT interpose pthread\_mutex functions. src/interpose/PThread.cpp enables interposing of some of the pthread functions, but they are excluded from the build by default. In order to enable pthread interposition, examine src/interpose/PThread.cpp carefully, possibly remove unnecessary wrapper functions, and add it into the src/interpose/modules.mk file.
 
 # Build
-In order to build the library, sync the source code to your Linux box and run make all. It will generate libexray.so.
+In order to build the library, sync the source code to your Linux box and run `make all`. It will generate libexray.so.
 
-The binary is 64-bit by default. In case you need a 32-bit version of libexray, you can configure the bitness of the build to 32. Edit the 'BUILD_MODE' at the beginning of the Makefile at the top level.
+The binary is 64-bit by default. In case you need a 32-bit version of libexray, you can configure the bitness of the build to 32. Edit the `BUILD_MODE` at the beginning of the Makefile at the top level.
 
-Support for std::rethrow_exception (C++11) is enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the 'CPP_MODE' in the Makefile at the top level. (The existence of rethrow_exception in libexray should not interfere with C++98 binary execution though.)
+Support for `std::rethrow_exception` (C++11) is enabled by default. In order to disable C++11 support and to compile libexray in C++98 mode, comment out the `CPP_MODE` in the Makefile at the top level. (The existence of rethrow_exception in libexray should not interfere with C++98 binary execution though.)
 
 # Usage
 You can attach the library to an application when you run it, like this
@@ -154,13 +154,13 @@ Use comma as delimiter when specifying multiple options.
 
 ### Option Values
 
-- demangle : Demangle function names within stack frames whenever possible. This is disabled by default.
-- exitonly : Only write the latest exception call stacks when exit() is called in the target application, and all exceptions after exit() is called.
-- logfile=filename : The library writes information to stderr by default. This option redirects the output to specified file.
-- maxframes=n : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
-- outputfilter=exception-name|... : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. You can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
-- pthread : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build (modules.mk). See the .cpp file for the target pthread functions.
-- rindex : Reverse the index for each frame. Frame index starts from 1 by default. This option will reverse the index. It may be easier to get the number of frames unwound between the throw and catch stack dumps for an exception.
+- `demangle` : Demangle function names within stack frames whenever possible. This is disabled by default.
+- `exitonly` : Only write the latest exception call stacks when exit() is called in the target application, and all exceptions after exit() is called.
+- `logfile=filename` : The library writes information to stderr by default. This option redirects the output to specified file.
+- `maxframes=n` : Limit the number of frames written to this value in each dump. Hardcoded limit is 100 frames.
+- `outputfilter=exception-name|...` : Pipe-separated (|) list of name of exceptions that will be excluded from output. Useful when you see numerous number of insignificant exceptions. You can write partial name of exceptions. For example, "InteractiveAugmentedIOException" will match the exception name in the above example.
+- `pthread` : Enable stack frame dumps from pthread functions. This only takes effect when you include src/interpose/PThead.cpp into the build (modules.mk). See the .cpp file for the target pthread functions.
+- `rindex` : Reverse the index for each frame. Frame index starts from 1 by default. This option will reverse the index. It may be easier to get the number of frames unwound between the throw and catch stack dumps for an exception.
 
 # Symbol Demangling
 C++ function names in the stack traces are mangled unless you use the demangle option. For example, you may see this function name in a back trace from libreoffice:
@@ -173,16 +173,16 @@ If you want to derive the original function name from this mangled name, use c++
 	ucbhelper::Content::getPropertyValue(rtl::OUString const&)
 
 # Tips
-- If your target application throws tons of exceptions and stacks are deep, this library can slow down its execution significantly due to the amount of output it generates. (Frame dumps are serialized by a global mutex.) In such cases, filter out unnecessary exceptions by the "outputfilter" option and limit the number of frames by the "maxframes" option.
+- If your target application throws tons of exceptions and stacks are deep, this library can slow down its execution significantly due to the amount of output it generates. (Frame dumps are serialized by a global mutex.) In such cases, filter out unnecessary exceptions by the `outputfilter` option and limit the number of frames by the `maxframes` option.
 
 - In case you want to enhance this library, it is not possible to interpose functions within the ELF executable itself, i.e., the program with main() function. Only functions defined in shared libraries can be interposed and analyzed.
 
 - If log file is empty and you see stack frames in your console, the target program may have closed all file descriptors including the one that this library had opened for logging. In this case, try using subshell to redirect all outputs to a file with parenthesis.
 
-    $ ( LD_PRELOAD=./libexray.so libreoffice ) > exray-output.txt 2>&1
+	`$ ( LD_PRELOAD=./libexray.so libreoffice ) > exray-output.txt 2>&1`
 
 # Mechanism
-Fundamentally this is a collection of wrappers around OS library functions including 'exit()', 'throw', 'catch' and 'std::rethrow_exception()'. Underneath the wrappers are building blocks for capturing and writing stack frames at an arbitrary execution point.
+Fundamentally this is a collection of wrappers around OS library functions including `exit()`, `throw`, `catch` and `std::rethrow_exception()`. Underneath the wrappers are building blocks for capturing and writing stack frames at an arbitrary execution point.
 
 LD\_PRELOAD and dlsym() are OS facilities that allow you to add functionality to or even completely replace functions in shared libraries. With the help of these facilities, this library grabs calls to C++ throw and catch statements in libstdc++.so.
 
