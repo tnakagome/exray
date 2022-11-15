@@ -6,7 +6,7 @@ It is also very easy to add call stack dumps to arbitrary C/C++ functions by cre
 
 # Usage Scenario
 
-A customer have a fairly large C++ program deployed in the production system. It continues to dump cores every once in a while. Your developers have analyzed cores, but what they tell you is that the cores are due to unhandled exceptions and they cannot do much about it. It is practically impossible to create debug binaries for analysis. After all, the customer will not allow you to casually swap binaries in the production environment. One of the developers have gave you a debugger script and suggested to trace the execution by attaching a debugger to the running process, but it only slowed down the execution significantly and the problem disappeared magically. Customer's pressure is escalating as you are unable to stop the core. You want to get a clue as to the cause of cores so your developers can create a patch.
+A customer has a fairly large C++ program deployed in the production system. It continues to dump cores every once in a while. Your developers have analyzed cores, but what they tell you is that the cores are due to unhandled exceptions and they cannot do much about it. It is practically impossible to create debug binaries for analysis. After all, the customer will not allow you to casually swap binaries in the production environment. One of the developers have gave you a debugger script and suggested to trace the execution by attaching a debugger to the running process, but it only slowed down the execution significantly and the problem disappeared magically. Customer's pressure is escalating as you are unable to stop the core. You want to get a clue as to the cause of cores so your developers can create a patch.
 
 libexray.so can help you in such a case. By restarting your program with libexray.so attached by LD_PRELOAD, you can see C++ exception information that the program throws. Run the program until it cores, then give the output along with the core file to your developers. It may help them identify the source of the problem and hopefully fix the core.
 
@@ -48,7 +48,7 @@ If your target program forks, or is a wrapper script, export the LD_PRELOAD vari
 # Example
 Real-world application examples of libexray are in the [Wiki](https://github.com/tnakagome/exray/wiki).
 
-Below is an example of exception thrown and caught within libreoffice.
+Below is a sample exception thrown and caught within libreoffice.
 
 This application is chosen as an example because it is one of a few, popular applications that can demonstrate the power of libexray.
 
