@@ -186,7 +186,7 @@ Fundamentally this is a collection of wrappers around OS library functions inclu
 
 LD_PRELOAD and `dlsym()` are OS facilities that allow you to add functionality to or even completely replace functions in shared libraries. With the help of these facilities, this library grabs calls to C++ throw and catch statements in libstdc++.so.
 
-g++ translates `throw` and `catch` statements into these function calls, which reside in libstc++.so.
+g++ translates `throw` and `catch` statements into these function calls, which reside in libstdc++.so.
 
     __cxa_throw()
     __cxa_begin_catch()
