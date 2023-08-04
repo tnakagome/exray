@@ -1,6 +1,6 @@
 # Introduction
 
-This is a pluggable shared library for C++ exception analysis at run-time. There is no need to rebuild target applications. You can attach the library to existing applications at start-up very easily, and see the origin and type of a C++ exception thrown as well as where it is caught. LD_PRELOAD environment variable will do all the magic for you.
+This is a pluggable shared library for C++ exception analysis at run-time. There is no need to rebuild target applications. You can attach the library to existing applications at start-up very easily, and see the origin and type of C++ exceptions thrown as well as where they are caught. LD_PRELOAD environment variable will do all the magic for you.
 
 It is also very easy to add call stack dumps to arbitrary C/C++ functions by creating wrapper functions around them. Supporting classes and functions already exist in this library.
 
