@@ -75,6 +75,7 @@ extern "C"
         }
         CallStackHandler handler;
         handler.dumpFrames("dlclose()", handle);
+        return CFunc::dlclose(handle);
     }
 #endif
 }
