@@ -10,14 +10,9 @@ A customer has a fairly large C++ program deployed in the production system. It 
 
 libexray.so can help you in such a case. By restarting your program with libexray.so attached by LD_PRELOAD, you can see C++ exception information that the program throws. Run the program until it cores, then give the output along with the core file to your developers. It may help them identify the source of the problem and hopefully fix the core.
 
-# Supported Platforms
+# Target Platforms
 
-Generally libexray should work on all modern Linux distributions.
-
-Tested and supported distributions are:
-
-- Red Hat Enterprise Linux 5.5 and higher, including clones
-- Ubuntu 16 and higher
+Generally libexray should work on all modern Linux distributions. The program was originally targeted for Red Hat Enterprise Linux 5.4+ circa 2015.
 
 The library is compiled in C++11 mode by default, but C++98 mode is also supported. See below for the procedure.
 
@@ -191,6 +186,6 @@ g++ translates `throw` and `catch` statements into these function calls, which r
     __cxa_throw()
     __cxa_begin_catch()
 
-libexray.so adds back trace functionality to these functions and `std::rethrow_exception()` as well as `exit()` by interposing calls to them and writing back traces from there.
+libexray.so adds back trace functionality to these functions and `std::rethrow_exception()` as well as `exit()` by interposing calls to them and writing back traces from there. Then the original functions in the OS libraries get invoked from within the wrappers.
 
 For more details on C++ exception handling, this is the reference: https://itanium-cxx-abi.github.io/cxx-abi/abi-eh.html
